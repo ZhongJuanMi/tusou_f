@@ -2,8 +2,6 @@ import ax from 'axios'
 import {
   error
 } from 'util'
-// ax.defaults.baseURL = 'http://47.106.200.223:8000'
-ax.defaults.baseURL = 'http://127.0.0.1:8000'
 export default function ({
   route,
   store,

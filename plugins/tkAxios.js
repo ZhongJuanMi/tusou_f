@@ -2,7 +2,6 @@ import Vue from 'vue'
 import tkAxios from 'axios'
 import VueCookie from 'vue-cookie'
 let options = {}
-tkAxios.defaults.baseURL = 'http://47.106.200.223:8080/api'
 tkAxios.interceptors.request.use(
   config => {
     if (process.client) {
