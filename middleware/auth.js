@@ -1,4 +1,10 @@
 import ax from 'axios'
+ax.defaults.baseURL =
+  process.env.NODE_ENV === 'production' ?
+  process.env.serverApiUrl :
+  process.env.localApiUrl
+ax.defaults.headers.post['Content-Type'] =
+  'application/x-www-form-urlencoded'
 import {
   error
 } from 'util'
@@ -18,7 +24,7 @@ export default function ({
     let serverCookie = ''
     if (req.headers.cookie) {
       req.headers.cookie.split(';').forEach(v => {
-        if (v.match('token=')) {
+        if (v.match('user_token=')) {
           serverCookie = v.replace('user_token=', '').trim()
         }
       })
@@ -32,6 +38,7 @@ export default function ({
       .then(({
         data
       }) => {
+        console.log(9, data)
         if (data.code == 2000) {
           store.commit('setUserInfo', {
             userInfo: data.data.userInfo
