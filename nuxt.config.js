@@ -72,7 +72,7 @@ module.exports = {
   modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
   proxy: {
     '/api/': {
-      target: 'http://47.106.200.223:8000/api',
+      target: 'http://localhost:8000/api',
       pathRewrite: {
         '^/api/': '/'
       }
