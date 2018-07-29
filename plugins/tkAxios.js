@@ -2,6 +2,7 @@ import Vue from 'vue'
 import tkAxios from 'axios'
 import VueCookie from 'vue-cookie'
 let options = {}
+tkAxios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 tkAxios.interceptors.request.use(
   config => {
     if (process.client) {
