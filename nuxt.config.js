@@ -70,11 +70,6 @@ module.exports = {
     '~assets/css/my_element.scss'
   ],
   modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
-  env: {
-    localApiUrl: 'http://127.0.0.1:3000',
-    serverApiUrl: 'http://47.106.200.223:3000',
-    baseUrl: process.env.BASE_URL || 'http://127.0.0.1:3000'
-  },
   proxy: {
     '/api/': {
       target: 'http://47.106.200.223:8000/api',

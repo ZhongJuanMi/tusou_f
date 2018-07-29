@@ -1,8 +1,5 @@
 import ax from 'axios'
-ax.defaults.baseURL =
-  process.env.NODE_ENV === 'production' ?
-  process.env.serverApiUrl :
-  process.env.localApiUrl
+ax.defaults.baseURL = 'http://47.106.200.223:8000/api'
 ax.defaults.headers.post['Content-Type'] =
   'application/x-www-form-urlencoded'
 import {
