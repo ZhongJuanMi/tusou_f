@@ -2,7 +2,6 @@ import Vue from 'vue'
 import tkAxios from 'axios'
 import VueCookie from 'vue-cookie'
 let options = {}
-tkAxios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 if (process.server) {
   tkAxios.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
 }

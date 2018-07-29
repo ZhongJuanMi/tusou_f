@@ -2,8 +2,6 @@ import ax from 'axios'
 if (process.server) {
   ax.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
 }
-ax.defaults.headers.post['Content-Type'] =
-  'application/x-www-form-urlencoded'
 import {
   error
 } from 'util'
