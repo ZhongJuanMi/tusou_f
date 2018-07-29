@@ -1,6 +1,6 @@
 import ax from 'axios'
 if (process.server) {
-  tkAxios.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
+  ax.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
 }
 ax.defaults.headers.post['Content-Type'] =
   'application/x-www-form-urlencoded'
