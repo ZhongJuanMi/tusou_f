@@ -1,5 +1,7 @@
 import ax from 'axios'
-ax.defaults.baseURL = 'http://47.106.200.223:8000/api'
+if (process.server) {
+  tkAxios.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
+}
 ax.defaults.headers.post['Content-Type'] =
   'application/x-www-form-urlencoded'
 import {

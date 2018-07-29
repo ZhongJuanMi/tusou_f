@@ -3,7 +3,9 @@ import tkAxios from 'axios'
 import VueCookie from 'vue-cookie'
 let options = {}
 tkAxios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-tkAxios.defaults.baseURL = 'http://47.106.200.223:8000/api'
+if (process.server) {
+  tkAxios.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
+}
 tkAxios.interceptors.request.use(
   config => {
     console.log(123, process.env.NODE_ENV)
