@@ -3,6 +3,7 @@ if (process.server) {
   // ax.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
   ax.defaults.baseURL = 'http://47.106.200.223:3000'
 }
+ax.defaults.baseURL = 'http://47.106.200.223:3000'
 import {
   error
 } from 'util'
