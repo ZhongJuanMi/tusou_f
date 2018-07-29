@@ -1,7 +1,8 @@
 import ax from 'axios'
-if (process.server) {
-  ax.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
-}
+// if (process.server) {
+//   ax.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
+// }
+ax.defaults.baseURL = 'http://47.106.200.223:8000/api'
 import {
   error
 } from 'util'
