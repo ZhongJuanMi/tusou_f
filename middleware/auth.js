@@ -1,6 +1,6 @@
 import ax from 'axios'
 if (process.server) {
-  ax.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
+  ax.defaults.baseURL = `http://${process.env.HOST || '47.106.200.223'}:${process.env.PORT || 3000}`
 }
 import {
   error
