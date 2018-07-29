@@ -9,7 +9,7 @@ tkAxios.defaults.baseURL =
   process.env.localApiUrl
 tkAxios.interceptors.request.use(
   config => {
-    if (process.client) {
+    if (process.client && VueCookie.get('user_token')) {
       config.headers.Authorization = `token ${VueCookie.get('user_token')}` //将接口返回的token信息配置到接口请求中
     }
     return config
