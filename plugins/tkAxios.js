@@ -2,10 +2,8 @@ import Vue from 'vue'
 import tkAxios from 'axios'
 import VueCookie from 'vue-cookie'
 let options = {}
-tkAxios.defaults.baseURL = 'http://47.106.200.223:3000'
 if (process.server) {
-  // tkAxios.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
-  tkAxios.defaults.baseURL = 'http://47.106.200.223:3000'
+  tkAxios.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
 }
 tkAxios.interceptors.request.use(
   config => {
