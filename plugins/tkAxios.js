@@ -2,10 +2,6 @@ import Vue from 'vue'
 import tkAxios from 'axios'
 import VueCookie from 'vue-cookie'
 let options = {}
-// if (process.server) {
-//   tkAxios.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
-// }
-tkAxios.defaults.baseURL = 'http://47.106.200.223:8000/api'
 tkAxios.interceptors.request.use(
   config => {
     console.log(123, process.env.NODE_ENV)
