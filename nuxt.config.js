@@ -85,7 +85,6 @@ module.exports = {
   // },
   axios: {
     baseURL: 'http://47.106.200.223:8000',
-    // or other axios configs.
   },
   router: {
     base: '/',
