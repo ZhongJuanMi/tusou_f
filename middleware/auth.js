@@ -3,7 +3,7 @@ import {
   error
 } from 'util'
 if (process.server) {
-  ax.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
+  ax.defaults.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3389}`
 }
 export default function ({
   route,
