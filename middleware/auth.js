@@ -3,8 +3,9 @@ import {
   error
 } from 'util'
 if (process.server) {
-  ax.defaults.baseURL = 'http://47.106.200.223:3000'
+  ax.defaults.baseURL = 'http://47.106.200.223:8000'
 }
+ax.defaults.baseURL = 'http://47.106.200.223:8000'
 export default function ({
   route,
   store,
