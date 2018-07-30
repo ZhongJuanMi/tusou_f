@@ -75,14 +75,14 @@ module.exports = {
   //   serverApiUrl: 'http://47.106.200.223:8000/api',
   //   baseUrl: process.env.BASE_URL || 'http://127.0.0.1:3000'
   // },
-  // proxy: {
-  //   '/api/': {
-  //     target: 'http://47.106.200.223:8000/api',
-  //     pathRewrite: {
-  //       '^/api/': '/'
-  //     }
-  //   }
-  // },
+  proxy: {
+    '/api/': {
+      target: 'http://47.106.200.223:8000/api',
+      pathRewrite: {
+        '^/api/': '/'
+      }
+    }
+  },
   axios: {
     baseURL: 'http://47.106.200.223:8000',
   },
