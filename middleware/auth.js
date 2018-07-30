@@ -29,7 +29,7 @@ export default function ({
     return ax
       .get('/api/users/getUser', {
         params: {
-          token: `token ${serverCookie}`
+          token: serverCookie ? `token ${serverCookie}` : ''
         }
       })
       .then(({

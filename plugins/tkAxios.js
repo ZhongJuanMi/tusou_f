@@ -7,20 +7,24 @@ if (process.server) {
 }
 tkAxios.interceptors.request.use(
   config => {
+    console.log(999999999, config)
     if (process.client && VueCookie.get('user_token')) {
       config.headers.authorization = `token ${VueCookie.get('user_token')}` //将接口返回的token信息配置到接口请求中
     }
     return config
   },
   error => {
+    console.log(88888888, error)
     return Promise.reject(error)
   }
 )
 tkAxios.interceptors.response.use(
   response => {
+    console.log(777, response)
     return response
   },
   error => {
+    console.log(666, error)
     return Promise.reject(error)
   }
 )
