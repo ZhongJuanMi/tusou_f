@@ -78,6 +78,7 @@ module.exports = {
   proxy: {
     '/api/': {
       target: 'http://47.106.200.223:8000/api',
+      // target: 'http://localhost:8000/api',
       pathRewrite: {
         '^/api/': '/'
       }
@@ -85,6 +86,7 @@ module.exports = {
   },
   axios: {
     baseURL: 'http://47.106.200.223:8000',
+    // baseURL: 'http://localhost:8000',
   },
   router: {
     base: '/',

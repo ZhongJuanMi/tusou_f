@@ -1,60 +1,60 @@
-  {
-    "name": "tusou_f",
-    "version": "1.0.0",
-    "description": "Nuxt.js project",
-    "author": "Janey <1027753145@qq.com>",
-    "private": true,
-    "config": {
-      "nuxt": {
-        "host": "0.0.0.0",
-        "port": "3000"
-      }
-    },
-    "scripts": {
-      "dev": "nuxt",
-      "build": "nuxt build",
-      "start": "nuxt build && nuxt start",
-      "generate": "nuxt generate",
-      "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-      "precommit": "npm run lint"
-    },
-    "standard": {
-      "ignore": [
-        "*.min.js",
-        "**/.build/",
-        "**/node_modules/"
-      ]
-    },
-    "eslintIgnore": [
-      "*.min.js"
-    ],
-    "dependencies": {
-      "@nuxtjs/axios": "^5.3.1",
-      "@nuxtjs/proxy": "^1.2.4",
-      "echarts": "^4.1.0",
-      "element-ui": "^2.4.1",
-      "express": "^4.16.3",
-      "nuxt": "^1.0.0",
-      "source-map-support": "^0.5.6",
-      "vue-cookie": "^1.1.4"
-    },
-    "devDependencies": {
-      "babel-eslint": "^8.2.3",
-      "eslint": "^4.19.1",
-      "eslint-config-prettier": "^2.9.0",
-      "eslint-config-standard": "^11.0.0",
-      "eslint-friendly-formatter": "^4.0.1",
-      "eslint-loader": "^2.0.0",
-      "eslint-plugin-html": "^4.0.3",
-      "eslint-plugin-import": "^2.12.0",
-      "eslint-plugin-node": "^6.0.1",
-      "eslint-plugin-prettier": "^2.6.0",
-      "eslint-plugin-promise": "^3.8.0",
-      "eslint-plugin-standard": "^3.1.0",
-      "eslint-plugin-vue": "^4.5.0",
-      "node-sass": "^4.9.0",
-      "prettier": "^1.13.5",
-      "sass-loader": "^7.0.3",
-      "standard": "^11.0.1"
+{
+  "name": "tusou_f",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "author": "Janey <1027753145@qq.com>",
+  "private": true,
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "3000"
     }
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt build && nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "standard": {
+    "ignore": [
+      "*.min.js",
+      "**/.build/",
+      "**/node_modules/"
+    ]
+  },
+  "eslintIgnore": [
+    "*.min.js"
+  ],
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.1",
+    "@nuxtjs/proxy": "^1.2.4",
+    "echarts": "^4.1.0",
+    "element-ui": "^2.4.1",
+    "express": "^4.16.3",
+    "nuxt": "^1.0.0",
+    "source-map-support": "^0.5.6",
+    "vue-cookie": "^1.1.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-html": "^4.0.3",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "node-sass": "^4.9.0",
+    "prettier": "^1.13.5",
+    "sass-loader": "^7.0.3",
+    "standard": "^11.0.1"
   }
+}
