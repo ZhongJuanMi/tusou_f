@@ -1,6 +1,6 @@
 <template>
   <div id="chartBox">
-
+    <p>{{weightall}}</p>
   </div>
 
 </template>
@@ -42,7 +42,7 @@ export default {
     },
     weightall () {
       return this.weights.map(item => {
-        item.AM > item.PM ? item.AM : item.PM
+        return item.AM*1 > item.PM*1 ? item.AM*1 : item.PM*1
       }).sort((a, b) => a - b)
     },
     min () {
