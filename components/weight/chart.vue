@@ -80,8 +80,8 @@ export default {
           splitLine: {
             show: false
           },
-          min: this.min < idealWeight ? this.min : idealWeight,
-          max: this.max > normalWeight ? this.max : normalWeight
+          min: (this.min)*1 < idealWeight*1 ? this.min : idealWeight,
+          max: (this.max)*1 > normalWeight*1 ? this.max : normalWeight
         },
         toolbox: {
           left: 'center',
