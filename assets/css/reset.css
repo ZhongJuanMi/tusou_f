@@ -1,4 +1,8 @@
 @charset "utf-8";
+*{
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 html,
 body,
 div,
@@ -147,7 +151,7 @@ button {
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #bdbcbc;
+  color: #666;
 }
 
 i,
@@ -184,11 +188,6 @@ table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-}
-
-table td {
-  word-break: break-all;
-  word-wrap: break-word;
 }
 
 input {

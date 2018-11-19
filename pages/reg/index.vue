@@ -5,7 +5,7 @@
                status-icon
                :rules="regRules"
                ref="regForm"
-               label-width="70px"
+               label-width="80px"
                size="small"
                class="reg_form">
         <el-form-item label="昵称"
@@ -63,8 +63,8 @@ export default {
       }
     };
     var validateName = (rule, value, callback) => {
-      this.$axios.get("/api/users/ifUser", { params: { name: this.regForm.nickName } }).then(res => {
-        if (res.data.data.has) {
+      this.$axios.ifreged(this.regForm.nickName).then(res => {
+        if (res.data) {
           callback(new Error("此账户已注册过"))
         } else {
           callback()
@@ -99,13 +99,11 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$axios.post("/api/users/registerUser", {
-            name: this.regForm.nickName,
-            password: this.regForm.pass
-          }).then(res => {
-            this.$cookie.set('user_token', res.data.data.token, 7);
-            this.$store.commit('setUserInfo', { userInfo: res.data.data.userInfo })
-            this.$router.go(-1)
+          this.$axios.reg(this.regForm.nickName,this.regForm.pass).then(res => {
+            this.$cookie.set('user_token', res.data.token, 7);
+            localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
+            this.$message.success('注册成功，即将自动登录')
+            this.$router.replace('/')
           })
         } else {
           return false;
@@ -122,17 +120,13 @@ export default {
 <style lang="scss" scoped>
 .reg {
     width: 100%;
-    height: 100vh;
-    background: linear-gradient(
-        40deg,
-        rgba(49, 0, 236, 0.8) 0%,
-        rgba(222, 0, 255, 0.8) 100%
-    );
+    height: calc(100vh - 61px);
     &_box {
         width: 380px;
         height: 220px;
         box-sizing: content-box;
         background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0px 4px 20px 0px #f56c6c47;
         padding-top: 40px;
         border-radius: 10px;
         position: absolute;

@@ -3,31 +3,38 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: '兔砸的窝',
-    meta: [{
+    title: 'tuza-兔砸的窝',
+    meta: [
+      {
         charset: 'utf-8'
       },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
-      },
+      // {
+      //   name: 'viewport',
+      //   content: 'width=device-width, initial-scale=1'
+      // },
       {
         hid: 'description',
         name: 'description',
         content: 'Nuxt.js project'
       }
     ],
-    link: [{
-      rel: 'icon',
-      type: 'image/x-icon',
-      href: '/favicon.ico'
-    }]
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico'
+      },
+      {
+        rel:'stylesheet',
+        href:'http://at.alicdn.com/t/font_630574_vybo68325g.css'
+      }
+    ]
   },
   /*
    ** Customize the progress bar color
    */
   loading: {
-    color: '#3B8070'
+    color: '#F56C6C'
   },
   /*
    ** Build configuration
@@ -36,10 +43,7 @@ module.exports = {
     /*
      ** Run ESLint on save
      */
-    extend(config, {
-      isDev,
-      isClient
-    }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -49,13 +53,23 @@ module.exports = {
         })
       }
     },
-    vendor: ['element-ui', 'axios', 'vue-cookie']
+    vendor: ['element-ui', 'axios', 'vue-cookie','mavon-editor','highlight.js']
   },
-  plugins: [{
+  plugins: [
+    {
       src: '~plugins/ElementUI',
       ssr: true
-    }, {
-      src: '~plugins/tkAxios',
+    },
+    {
+      src: '~plugins/axios',
+      ssr: true
+    },
+    {
+      src: '~plugins/MavonEditor',
+      ssr: false
+    },
+    {
+      src: '~plugins/highlight',
       ssr: false
     },
     {
@@ -65,32 +79,31 @@ module.exports = {
   ],
   css: [
     // 项目中的 CSS 文件
-    '~assets/css/reset.css',
+    '~assets/css/index.scss',
     'element-ui/lib/theme-chalk/index.css',
-    '~assets/css/my_element.scss'
+    '~assets/css/my_element.scss',
+    'mavon-editor/dist/css/index.css',
+    'mavon-editor/dist/markdown/github-markdown.min.css',
+    'mavon-editor/dist/highlightjs/styles/atom-one-dark.min.css'
   ],
-  modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
-  // env: {
-  //   localApiUrl: 'http://127.0.0.1:3000/api',
-  //   serverApiUrl: 'http://47.106.200.223:8000/api',
-  //   baseUrl: process.env.BASE_URL || 'http://127.0.0.1:3000'
-  // },
+  modules: ['@nuxtjs/axios','@nuxtjs/proxy',['nuxt-sass-resources-loader', '@/assets/css/var.scss']],
+  env: {
+    serverApiUrl: 'http://47.106.200.223:3000/api/',
+    localApiUrl: 'http://localhost:3000/api/'
+  },
   proxy: {
     '/api/': {
-      target: 'http://47.106.200.223:8000/api',
-      // target: 'http://localhost:8000/api',
+      target: 'http://47.106.200.223:8000/',
+      // target: 'http://localhost:8000/',
+      changeOrigin: true,
       pathRewrite: {
         '^/api/': '/'
       }
     }
   },
-  axios: {
-    baseURL: 'http://47.106.200.223:8000',
-    // baseURL: 'http://localhost:8000',
-  },
   router: {
     base: '/',
     fallback: true,
-    middleware: 'auth'
+    middleware: 'common'
   }
 }

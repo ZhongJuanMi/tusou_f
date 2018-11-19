@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     getWeight () {
-      this.$tkAxios.get('/api/weights/getWeight').then(({ data }) => {
+      this.$axios.get('/api/weights/getWeight').then(({ data }) => {
         this.weights = data.data.weights
       })
     }
@@ -69,8 +69,10 @@ export default {
 <style lang="scss" scoped>
 .weight {
     width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.9);
+    // background-image: url(/assets/images/weight.jpg) center;
+    background-size: 100vw;
+    height: calc(100vh - 61px);
+    position: relative;
     &_c {
         display: flex;
         justify-content: center;
@@ -80,7 +82,6 @@ export default {
         right: 0;
         bottom: 0;
         top: 0;
-        margin: 40px auto 0;
         &n {
             font-size: 20px;
             color: aliceblue;

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <!-- 菜单 -->
-    <div class="cube">
+    <!-- <div class="cube">
       <nuxt-link to="/weight">
         <div class="front">
           <h2>Front side</h2>
@@ -29,12 +29,16 @@
       <i class="i_bottom"></i>
       <i class="i_left"></i>
       <i class="i_right"></i>
-    </div>
+    </div> -->
   </div>
 
 </template>
 <script>
+import AppLogo from '@/components/AppLogo'
 export default {
+  components: {
+    AppLogo
+  }
 };
 </script>
 
@@ -48,11 +52,11 @@ export default {
     display: block;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      45deg,
-      rgba(91, 234, 213, 0.9) 0,
-      rgba(98, 103, 252, 0.9) 100%
-    );
+    // background: linear-gradient(
+    //   45deg,
+    //   rgba(91, 234, 213, 0.9) 0,
+    //   rgba(98, 103, 252, 0.9) 100%
+    // );
     background-size: 100%;
   }
 }

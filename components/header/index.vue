@@ -1,39 +1,74 @@
 <template>
-  <header class="clearfix">
-    <ul class="fl">
-      <li>
-        <span>{{note}}</span>
-        <span class="name">{{name}}</span>
-        <span>欢迎来到兔窝镇</span>
-      </li>
-      <nuxt-link :to="item.link"
-                 tag="li"
-                 v-for="(item,index) in nav"
-                 :key="index"
-                 class="nav"
-                 v-if="!name">
-        {{item.key}}
-      </nuxt-link>
-      <li v-if="name"
-          class="nav"
-          @click="outLog">注销登录</li>
-    </ul>
-    <zjMenu class="fr menu" />
-  </header>
+  <div>
+    <header class="clearfix">
+      <ul>
+        <li class="logo">
+          <img src="@/assets/images/logo.png"
+               alt="">
+          <!-- <span>{{note}}</span> -->
+        </li>
+        <li v-for="(item,index) in nav"
+            :key="index"
+            class="nav"
+            :class="{'active':curPageIndex==index}">
+          <nuxt-link :to="item.link"
+                     tag="span">{{item.key}}</nuxt-link>
+        </li>
+        <li class="person">
+          <div v-if="name"
+               class="log_done"
+               @mouseover="person_more=true"
+               @mouseout="person_more=false">
+            <div class="person_pic">
+              <img :src="user_pic"
+                   alt="">
+              <i class="iconfont icon-sanjiao"></i>
+            </div>
+            <dl class="person_more"
+                :class="{'on':person_more}">
+              <dd>
+                <i class="iconfont icon-shezhi"></i>
+                <span>设置</span>
+              </dd>
+              <dd @click="outLog">
+                <i class="iconfont icon-tuichu"></i>
+                <span>退出</span>
+              </dd>
+            </dl>
+          </div>
+          <div v-else
+               class="log_no">
+            <nuxt-link to="/reg">注册</nuxt-link>
+            <nuxt-link to="/log">登录</nuxt-link>
+          </div>
+        </li>
+      </ul>
+
+    </header>
+    <div class="empty"></div>
+
+  </div>
 </template>
 
 <script>
-import zjMenu from './menu'
+import default_pic from '@/assets/images/default_userpic.png'
 export default {
   data () {
     return {
+      person_more: false,
       nav: [
         {
-          key: "登录",
-          link: "/log"
+          key: "首页",
+          link: "/"
         }, {
-          key: "注册",
-          link: "/reg"
+          key: "兔砸博客",
+          link: "/blog"
+        }, {
+          key: "你哒体重",
+          link: "/weight"
+        }, {
+          key: "待续ing",
+          link: "erro"
         }]
     }
   },
@@ -42,69 +77,148 @@ export default {
     outLog () {
       this.$cookie.delete('user_token')
       this.$store.commit('clearUserInfo')
-      this.$router.push('/log')
+      this.$message('您已成功退出登录')
     }
   },
   computed: {
-    // 返回头部头部信息(时间)
-    note () {
-      let hours = new Date().getHours()
-      let text = ''
-      if (hours < 6) {
-        text = '凌晨静悄悄，注意身体哟~'
-      } else if (hours < 12) {
-        text = '早上好！'
-      } else if (hours < 14) {
-        text = '中午好，今天的午饭还好吗？'
-      } else if (hours < 17) {
-        text = '下午好！'
-      } else if (hours < 19) {
-        text = '傍晚好，吃饭了吗？'
-      } else if (hours < 22) {
-        text = '晚上好！'
-      } else if (hours < 24) {
-        text = '早点睡哦~'
+    curPageIndex () {
+      let index = 0
+      let path = this.$route.fullPath
+      for (let i in this.nav) {
+        if (new RegExp(this.nav[i].link).test(path)) {
+          index = i
+        }
       }
-      return text
+      return index
     },
     name () {
       return this.$store.state.userInfo.name
+    },
+    user_pic () {
+      return this.$store.state.userInfo.user_pic || default_pic
     }
-  },
-  components: {
-    zjMenu
   }
 }
 </script>
 
 <style lang="scss" scoped>
-header {
-    position: absolute;
+  .empty {
     width: 100%;
-    z-index: 9;
-    top: 0;
-    left: 0;
-    padding: 20px 0 0 20px;
-    li {
-        margin-right: 30px;
-        text-align: center;
-        float: left;
-        font-size: 14px;
-        color: #fff;
-        transition: all 0.3s;
-        &.nav {
-            cursor: pointer;
-        }
-        &:hover {
-            &.nav {
-                color: aqua;
-            }
-        }
-        .name {
-            color: aqua;
-            margin-right: 10px;
-        }
+    height: 0;
+    margin-top: 61px;
+  }
+header {
+  position: absolute;
+  width: 100%;
+  padding-top: 10px;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  background-color: rgba($primary, 0.04);
+  border-bottom: $border-solid;
+  z-index: $zindex_up;
+  ul {
+    width: $body-width;
+    margin: auto;
+  }
+
+  li {
+    margin-right: 30px;
+    text-align: center;
+    float: left;
+  }
+  .logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 140px;
+    img {
+      width: 50px;
+      height: 50px;
+      position: relative;
+      top: -5px;
+      max-width: none;
     }
+  }
+  .nav {
+    line-height: 40px;
+    margin-right: 50px;
+    font-size: 16px;
+    color: $black;
+    span {
+      padding: 0 10px;
+      display: inline-block;
+      transition: all 0.3s;
+      cursor: $pointer;
+      &:hover {
+        color: $primary;
+      }
+    }
+    &.active {
+      color: $primary;
+      font-weight: bold;
+    }
+  }
+
+  .person {
+    float: right;
+    position: relative;
+    height: 50px;
+    .log_done {
+      height: 100%;
+    }
+    .log_no {
+      padding-top: 5px;
+      font-size: 14px;
+      margin: 0 10px;
+      a {
+        display: inline-block;
+        padding: 4px 10px;
+        &:hover {
+          color: $blue;
+        }
+      }
+    }
+    &_pic {
+      width: 80px;
+      height: 40px;
+      text-align: center;
+      overflow: hidden;
+      cursor: $pointer;
+      img {
+        width: 40px;
+        background-color: $bg;
+        border-radius: 50%;
+      }
+    }
+    &_more {
+      position: absolute;
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+      top: 50px;
+      left: 0;
+      width: 80px;
+      height: 0;
+      background: rgba($primary, 0.04);
+      transition: all 0.3s;
+      &.on {
+        height: 80px;
+      }
+      dd {
+        line-height: 40px;
+        i {
+          margin-right: 10px;
+        }
+        span {
+          font-size: 14px;
+        }
+        cursor: $pointer;
+        transition: all 0.3s;
+        &:hover {
+          background: rgba($primary, 0.1);
+        }
+      }
+    }
+  }
 }
 </style>
 

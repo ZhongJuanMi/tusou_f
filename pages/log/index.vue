@@ -59,13 +59,11 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
-          this.$axios.post("/api/users/logUser", {
-            name: this.logForm.nickName,
-            password: this.logForm.pass
-          }).then(res => {
-            if (res.data.code == 2000) {
-              this.$cookie.set('user_token', res.data.data.token, 7);
-              this.$store.commit('setUserInfo', { userInfo: res.data.data.userInfo })
+          this.$axios.log(this.logForm.nickName, this.logForm.pass).then(res => {
+            if (res.code == 2000) {
+              this.$cookie.set('user_token', res.data.token, 7);
+              this.$store.commit('setUserInfo',res.data.userInfo)
+              this.$message.success('登录成功')
               this.$router.go(-1)
             } else {
               this.$message.error('登录账户或密码错误,请重试！')
@@ -85,30 +83,26 @@ export default {
     
 <style lang="scss" scoped>
 .log {
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(
-        40deg,
-        rgba(49, 0, 236, 0.8) 0%,
-        rgba(222, 0, 255, 0.8) 100%
-    );
-    &_box {
-        width: 380px;
-        height: 220px;
-        background: rgba(255, 255, 255, 0.2);
-        padding-top: 40px;
-        border-radius: 10px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        margin: auto;
-    }
-    &_form {
-        width: 300px;
-        margin: auto;
-    }
+  width: 100%;
+  height: calc(100vh - 61px);
+  &_box {
+    width: 380px;
+    height: 220px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 4px 20px 0px #f56c6c47;
+    padding-top: 40px;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+  &_form {
+    width: 300px;
+    margin: auto;
+  }
 }
 </style>
 

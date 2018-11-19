@@ -1,15 +1,15 @@
-.log,
-.reg {
-    .el-form-item__label {
-        font-size: 12px;
-        color: #fff;
-    }
+// .log,
+// .reg {
+//     .el-form-item__label {
+//         font-size: 12px;
+//         color: #fff;
+//     }
 
-    .el-input__inner {
-        background-color: rgba(255, 255, 255, 0.2);
-        color: #fff;
-    }
-}
+//     .el-input__inner {
+//         background-color: rgba(255, 255, 255, 0.2);
+//         color: #fff;
+//     }
+// }
 
 .weight {
     .el-select {
@@ -36,20 +36,32 @@
     .el-date-editor.el-input {
         width: 280px;
     }
-
-    // &_weight {
-    //     .el-dialog__body {
-    //         padding-bottom: 20px;
-    //         width: 70%;
-    //         margin: auto;
-    //     }
-
-    //     .el-input-group--append {
-    //         width: 100%;
-    //     }
-    //     .el-date-editor--datetime {
-    //         width: 100%;
-    //         margin-bottom: 15px;
-    //     }
-    // }
 }
+.el-tree{
+  color: $black;
+  background-color: transparent;
+  &-node{
+    &__expand-icon{
+      color: rgba($black,.8);
+    }
+    &__content{
+      cursor: $pointer;
+      &:hover,&:focus>.el-tree-node__content{
+        background-color: rgba($green,.08);
+      }
+    }
+  }
+  &--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+    background-color: rgba($green,.12);
+  }
+}
+
+.el-tag{
+  cursor: $pointer;
+  .el-icon-close{
+    cursor: $pointer!important;
+  }
+}
+.v-note-wrapper{
+  min-height:calc(100vh - 61px - 140px)!important;
+        }

@@ -1,0 +1,8 @@
+@import "./reset.css";
+html{
+  cursor: $default;
+  background-color: $bg;
+}
+a,button{
+  cursor: $pointer!important;
+}
