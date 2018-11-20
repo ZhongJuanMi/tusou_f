@@ -5,7 +5,6 @@
         <li class="logo">
           <img src="@/assets/images/logo.png"
                alt="">
-          <!-- <span>{{note}}</span> -->
         </li>
         <li v-for="(item,index) in nav"
             :key="index"
@@ -188,6 +187,7 @@ header {
         width: 40px;
         background-color: $bg;
         border-radius: 50%;
+        margin-right: 10px;
       }
     }
     &_more {
@@ -198,7 +198,7 @@ header {
       left: 0;
       width: 80px;
       height: 0;
-      background: rgba($primary, 0.04);
+      background:#f5efef;
       transition: all 0.3s;
       &.on {
         height: 80px;

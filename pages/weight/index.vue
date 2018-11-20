@@ -16,7 +16,7 @@
           {{$store.state.userInfo.name}} 你还没有设置个人信息哦~ <br>设置后可比对标准体重与目标体重
         </p>
         <zjChart :weights='weights'
-                 v-if="weights.length" />
+                 v-if="weights" />
         <p v-else
            class="weight_cn">{{$store.state.userInfo.name}} 你还没有记录过体重哦~</p>
 
@@ -33,29 +33,23 @@ import zjChart from '~/components/weight/chart'
 import zjInfoDialog from '~/components/weight/infoDialog'
 import zjWeightDialog from '~/components/weight/weightDialog'
 export default {
+  middleware: 'auth',
+  async asyncData ({ $axios }) {
+    let {data}=await $axios.get('/api/weights/getWeight')
+    return{
+      weights:data.data.weights
+    }
+  },
   data () {
     return {
       infoDialogVisible: false,
-      weightDialogVisible: false,
-      weights: [],
-      test:''
+      weightDialogVisible: false
     }
   },
   components: {
     zjChart,
     zjInfoDialog,
     zjWeightDialog
-  },
-  beforeMount () {
-    if (!this.$store.state.userInfo.name) {
-      this.$message({
-        message: '请先登录哦~',
-        type: 'warning'
-      });
-      this.$router.push('/log')
-    } else {
-      this.getWeight()
-    }
   },
   methods: {
     getWeight () {
@@ -68,37 +62,37 @@ export default {
 </script>
 <style lang="scss" scoped>
 .weight {
-    width: 100%;
-    // background-image: url(/assets/images/weight.jpg) center;
-    background-size: 100vw;
-    height: calc(100vh - 61px);
-    position: relative;
-    &_c {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
-        &n {
-            font-size: 20px;
-            color: aliceblue;
-            margin-left: 50px;
-            margin-bottom: 50px;
-            &:first-child {
-                color: aquamarine;
-            }
-        }
-        &b {
-            width: 100px;
-            height: 250px;
-        }
-        &t {
-            min-height: 250px;
-        }
+  width: 100%;
+  // background-image: url(/assets/images/weight.jpg) center;
+  background-size: 100vw;
+  height: calc(100vh - 61px);
+  position: relative;
+  &_c {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    &n {
+      font-size: 20px;
+      color: aliceblue;
+      margin-left: 50px;
+      margin-bottom: 50px;
+      &:first-child {
+        color: aquamarine;
+      }
     }
+    &b {
+      width: 100px;
+      height: 250px;
+    }
+    &t {
+      min-height: 250px;
+    }
+  }
 }
 </style>
 

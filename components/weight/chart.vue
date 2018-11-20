@@ -1,11 +1,21 @@
 <template>
   <div id="chartBox">
-    <p>{{weightall}}</p>
+    <!-- <p>{{weightall}}</p> -->
   </div>
 
 </template>
 <script>
-import echarts from 'echarts'
+import echarts from 'echarts/lib/echarts'
+// 引入曲线图
+require('echarts/lib/chart/line');
+// 引入提示框和标题组件
+require('echarts/lib/component/tooltip')
+require('echarts/lib/component/title')
+require('echarts/lib/component/legend')
+require('echarts/lib/component/toolbox')
+require('echarts/lib/component/dataZoom')
+require('echarts/lib/component/markLine')
+require('echarts/lib/component/visualMap')
 export default {
   props: {
     weights: Array
@@ -94,9 +104,6 @@ export default {
           }
         },
         dataZoom: [
-          // {
-          //   startValue: '2014-06-01'
-          // },
           {
             type: 'inside'
           }
@@ -107,11 +114,11 @@ export default {
           pieces: idealWeight ? [{
             gt: 0,
             lte: idealWeight,
-            color: 'aqua'
+            color: '#409EFF'
           }, {
             gt: idealWeight,
             lte: normalWeight,
-            color: '#ffde33'
+            color: '#67C23A'
           }, {
             gt: normalWeight,
             color: '#f56c6c'
@@ -136,7 +143,7 @@ export default {
                     formatter: '目标体重'
                   },
                   lineStyle: {
-                    color: 'aqua'
+                    color: '#409EFF'
                   }
                 },
                 {
@@ -146,7 +153,7 @@ export default {
                     formatter: '标准体重'
                   },
                   lineStyle: {
-                    color: '#ffde33'
+                    color: '#f56c6c'
                   }
                 }
               ]
@@ -170,7 +177,7 @@ export default {
                     formatter: '目标体重'
                   },
                   lineStyle: {
-                    color: 'aqua'
+                    color: '#409EFF'
                   }
                 },
                 {
@@ -180,7 +187,7 @@ export default {
                     formatter: '标准体重'
                   },
                   lineStyle: {
-                    color: '#ffde33'
+                    color: '#67C23A'
                   }
                 }
               ]

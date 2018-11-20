@@ -2,10 +2,16 @@
   <div class="blog_detail_id">
     <h1>
       <span>{{title}}</span>
-      <el-button type="danger" size="mini"
+      <span class="button">
+        <el-button type="success" size="mini"
+               icon="el-icon-edit"
+               circle v-if="$store.state.userInfo.name"
+               @click="$router.push(`/blog/edit/${$route.params.id}`)"></el-button>
+        <el-button type="danger" size="mini"
                icon="el-icon-delete"
                circle v-if="$store.state.userInfo.name"
                @click="del"></el-button>
+      </span>
     </h1>
     <p class="time">
       <span>创建时间：{{create_time}}</span>
@@ -68,10 +74,9 @@ export default {
   h1 {
     text-align: center;
     font-size: 30px;
-    button{
+    .button{
       float: right;
-      position: relative;
-      top: 8px;
+      margin-left: 10px;
     }
   }
   .time {

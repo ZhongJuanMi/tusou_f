@@ -53,7 +53,15 @@ module.exports = {
         })
       }
     },
-    vendor: ['element-ui', 'axios', 'vue-cookie','mavon-editor','highlight.js']
+    // vendor: ['element-ui', 'axios', 'vue-cookie','mavon-editor','highlight.js'],
+    babel: {
+      plugins: [
+        [
+          'component',
+          { libraryName: 'element-ui', styleLibraryName: 'theme-chalk' }
+        ]
+      ]
+    },
   },
   plugins: [
     {
@@ -80,7 +88,7 @@ module.exports = {
   css: [
     // 项目中的 CSS 文件
     '~assets/css/index.scss',
-    'element-ui/lib/theme-chalk/index.css',
+    // 'element-ui/lib/theme-chalk/index.css',
     '~assets/css/my_element.scss',
     'mavon-editor/dist/css/index.css',
     'mavon-editor/dist/markdown/github-markdown.min.css',
