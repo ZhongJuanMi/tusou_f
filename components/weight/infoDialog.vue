@@ -111,9 +111,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // 提交个人信息到后台
-          this.$tkAxios.post('/api/users/setInfo',
-            this.form
-          ).then(() => {
+            this.$axios.setUserInfo(this.form).then(() => {
             this.$store.commit('setUserInfo', { userInfo: { ...this.form, name: this.$store.state.userInfo.name } })
             this.cancle()
           })

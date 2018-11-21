@@ -25,10 +25,11 @@
             </div>
             <dl class="person_more"
                 :class="{'on':person_more}">
-              <dd>
+              <nuxt-link to="/personal"
+                         tag="dd">
                 <i class="iconfont icon-shezhi"></i>
                 <span>设置</span>
-              </dd>
+              </nuxt-link>
               <dd @click="outLog">
                 <i class="iconfont icon-tuichu"></i>
                 <span>退出</span>
@@ -94,18 +95,19 @@ export default {
       return this.$store.state.userInfo.name
     },
     user_pic () {
-      return this.$store.state.userInfo.user_pic || default_pic
+      let user_pic=this.$store.state.userInfo.user_pic
+      return user_pic? this.$store.state.baseURL+user_pic:default_pic
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .empty {
-    width: 100%;
-    height: 0;
-    margin-top: 61px;
-  }
+.empty {
+  width: 100%;
+  height: 0;
+  margin-top: 61px;
+}
 header {
   position: absolute;
   width: 100%;
@@ -198,7 +200,7 @@ header {
       left: 0;
       width: 80px;
       height: 0;
-      background:#f5efef;
+      background: #f5efef;
       transition: all 0.3s;
       &.on {
         height: 80px;

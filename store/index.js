@@ -5,7 +5,8 @@ Vue.use(Vuex)
 export const state = () => {
   return {
     userInfo: {},
-    baseURL:'http://47.106.200.223:8000'
+    // baseURL:'http://47.106.200.223:8000/'
+    baseURL:'http://localhost:8000/'
     
   }
 }

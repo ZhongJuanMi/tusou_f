@@ -9,7 +9,9 @@ import {
   Option,
   Select,
   FormItem,
-  DatePicker
+  DatePicker,
+  Cascader,
+  Radio,RadioGroup,Message
 } from 'element-ui'
 Vue.use(Button)
   .use(Tag)
@@ -20,4 +22,5 @@ Vue.use(Button)
   .use(Option)
   .use(Select)
   .use(FormItem)
-  .use(DatePicker)
+  .use(DatePicker).use(Cascader).use(Radio).use(RadioGroup)
+  Vue.prototype.$message = Message;

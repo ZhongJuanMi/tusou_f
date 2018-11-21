@@ -88,7 +88,6 @@ module.exports = {
   css: [
     // 项目中的 CSS 文件
     '~assets/css/index.scss',
-    // 'element-ui/lib/theme-chalk/index.css',
     '~assets/css/my_element.scss',
     'mavon-editor/dist/css/index.css',
     'mavon-editor/dist/markdown/github-markdown.min.css',
@@ -101,8 +100,8 @@ module.exports = {
   },
   proxy: {
     '/api/': {
-      target: 'http://47.106.200.223:8000/',
-      // target: 'http://localhost:8000/',
+      // target: 'http://47.106.200.223:8000/',
+      target: 'http://localhost:8000/',
       changeOrigin: true,
       pathRewrite: {
         '^/api/': '/'

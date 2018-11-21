@@ -159,6 +159,25 @@ export default ({ $axios, req, redirect }) => {
      */
     getweight(){
       return get('api/weights/getWeight')
+    },
+    /**
+     * 设置用户信息
+     * @param {*} height 
+     * @param {*} idealWeight 
+     * @param {*} gender 
+     * @param {*} name 
+     * @param {*} user_pic 
+     */
+    setUserInfo(data){
+      return post('api/users/setInfo',data)
+    },
+    /**
+     *上传图片
+     *
+     * @returns
+     */
+    uploadimg(data){
+      return post('api/file/imgupload',data)
     }
   }
   Object.assign($axios, api)
