@@ -2,14 +2,14 @@
   <div class="blog_detail_id">
     <h1>
       <span>{{title}}</span>
-      <span class="button">
+      <span class="button" v-if="$store.state.userInfo.is_tz">
         <el-button type="success" size="mini"
                icon="el-icon-edit"
-               circle v-if="$store.state.userInfo.name"
+               circle 
                @click="$router.push(`/blog/edit/${$route.params.id}`)"></el-button>
         <el-button type="danger" size="mini"
                icon="el-icon-delete"
-               circle v-if="$store.state.userInfo.name"
+               circle
                @click="del"></el-button>
       </span>
     </h1>

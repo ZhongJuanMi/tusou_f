@@ -18,12 +18,14 @@
         <label for="">{{item.label}}</label>
         <input type="text"
                v-model="item.value"
-               v-if="index!=1">
+               v-if="index!=1" @input="index?null:verifyname()">
         <el-radio-group v-model="settings[1].value"
                         v-else>
           <el-radio label="male">男</el-radio>
           <el-radio label="female">女</el-radio>
+          
         </el-radio-group>
+        <span v-if="err&&!index">{{err}}</span>
       </li>
     </ul>
     <div class="btn">
@@ -60,11 +62,22 @@ export default {
       user_pic: user_pic,
       default_pic: default_pic,
       baseURL: store.state.baseURL,
-      temp_pic: ''
+      temp_pic: '',
+      err:null
     }
   },
   methods: {
-    // 选取图片
+    // 验证昵称是否可用
+    verifyname(){
+      this.$axios.ifreged(this.settings[0].value).then(res => {
+        if (res.data) {
+          this.err='此昵称已注册,重新选个名字叭~'
+        } else {
+          this.err=null
+        }
+      })
+    },
+    // 选取图片实时显示
     selecimg () {
       let reads = new FileReader()
       let file = this.$refs.selecpic.files[0]
@@ -77,6 +90,10 @@ export default {
     },
     // 保存设置
     savesetting () {
+      if(this.err){
+        this.$message.error('请重新设置昵称')
+        return
+      }
       let formData = new FormData()
       let file = this.$refs.selecpic.files[0];
       if (file) {
@@ -154,6 +171,11 @@ li {
     font-size: 16px;
     height: 30px;
     color: $black;
+  }
+  >span{
+    font-size: 14px;
+    color: #f00;
+    margin-left: 10px;
   }
 }
 .btn {

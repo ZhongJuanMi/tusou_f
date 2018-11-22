@@ -11,7 +11,7 @@
         <div class="text">
           <p class="blog_m_c_b_l_title">
             <span>{{item.title}}</span>
-            <span v-if="$store.state.userInfo.name">
+            <span v-if="$store.state.userInfo.is_tz">
               <el-button type="primary"
                          icon="el-icon-edit"
                          size="mini"
@@ -115,6 +115,12 @@ export default {
       margin-bottom: 20px;
       display: flex;
       align-content: center;
+      transition: all .4s;
+      &:hover{
+        cursor: $pointer;
+        transform: translateY(-4px);
+        box-shadow: 0px 4px 12px 2px rgba($gray, 0.1);
+      }
       
       &.not_found {
         display: block;

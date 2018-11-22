@@ -160,6 +160,9 @@ export default ({ $axios, req, redirect }) => {
     getweight(){
       return get('api/weights/getWeight')
     },
+    setweight(datetime,weight){
+      return post('api/weights/setWeight',{datetime,weight})
+    },
     /**
      * 设置用户信息
      * @param {*} height 

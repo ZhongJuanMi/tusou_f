@@ -30,7 +30,7 @@
     <div class="blog_tag">
       <p class="blog_tag_title">
         <i class="iconfont icon-yanjing1"></i>
-        <span>已选条件</span>
+        <span>筛选条件</span>
       </p>
       <div class="blog_tag_tag">
         <el-tag :closable="index!='sort'"
@@ -131,9 +131,11 @@ export default {
     },
     restorecondition () {
       this.keywords = ''
+      this.tags=''
       this.$emit('input', {
         sort: 0,
-        keywords: ''
+        keywords: '',
+        tags:''
       })
     },
     search () {

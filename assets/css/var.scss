@@ -1,3 +1,4 @@
+@import "./animate.scss";
 // color
 $primary: #F56C6C;
 $bg: #f5f5f5;
@@ -15,6 +16,7 @@ $pointer:url('/pointer.ico'),pointer;
 $default:url('/cursor.ico'),default;
 
 // z-index
+$z-index_tips:9;
 $zindex_up:8;
 $zindex_middle:4;
 $z-index_down:2;

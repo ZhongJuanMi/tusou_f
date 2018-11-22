@@ -78,6 +78,7 @@ export default {
       this.$cookie.delete('user_token')
       this.$store.commit('clearUserInfo')
       this.$message('您已成功退出登录')
+      this.$router.replace('/')
     }
   },
   computed: {

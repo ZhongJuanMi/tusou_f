@@ -130,11 +130,8 @@ export default {
           let { datetime, weight } = this.form
           datetime = datetime.toString()
           // 提交个人信息到后台
-          this.$tkAxios
-            .post('/api/weights/setWeight', {
-              datetime,
-              weight
-            })
+          this.$axios.setweight(datetime,
+            weight)
             .then(() => {
               this.$emit('refresh')
               this.cancle()
