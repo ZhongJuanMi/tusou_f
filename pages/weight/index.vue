@@ -3,9 +3,9 @@
     <div class="weight_c">
 
       <div class="weight_cb">
-        <el-button type="warning"
+        <!-- <el-button type="warning"
                    round
-                   @click="infoDialogVisible=true">个人信息</el-button>
+                   @click="infoDialogVisible=true">个人信息</el-button> -->
         <el-button type="danger"
                    round
                    @click="weightDialogVisible=true">记录体重</el-button>
