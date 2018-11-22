@@ -1,7 +1,8 @@
 <template>
   <div class="Personal">
     <div class="userpic">
-      <img :src="user_pic?baseURL+user_pic:default_pic"
+      <img :src="user_pic?baseURL+user_pic:temp_pic?temp_pic:default_pic"
+           @error="user_pic=''"
            alt="">
       <el-button type="danger"
                  plain>更换照片
@@ -58,33 +59,37 @@ export default {
       }],
       user_pic: user_pic,
       default_pic: default_pic,
-      baseURL:store.state.baseURL
+      baseURL: store.state.baseURL,
+      temp_pic: ''
     }
   },
   methods: {
     // 选取图片
     selecimg () {
-      let reads = new FileReader();
-      let file = this.$refs.selecpic.files[0];
-      let formData = new FormData()
-      formData.append('file',file)
-      this.$axios.uploadimg(formData).then(res=>{
-        if(res.code===2000&&res.data){
-          console.log(res.data)
-          this.user_pic=res.data
-        }
-      })
+      let reads = new FileReader()
+      let file = this.$refs.selecpic.files[0]
+      reads.readAsDataURL(file)
+      reads.onload = (e) => {
+        this.user_pic = ''
+        this.temp_pic = e.target.result
+      }
+
     },
     // 保存设置
     savesetting () {
+      let formData = new FormData()
+      let file = this.$refs.selecpic.files[0];
+      if (file) {
+        formData.append('file', file)
+      }
       let data = {
         name: this.settings[0].value,
         gender: this.settings[1].value,
         idealWeight: this.settings[2].value,
-        height: this.settings[3].value,
-        user_pic: this.user_pic
+        height: this.settings[3].value
       }
-      this.$axios.setUserInfo(data).then(({ code }) => {
+      formData.append('userInfo', JSON.stringify(data))
+      this.$axios.setUserInfo(formData).then(({ code,data }) => {
         if (code == 2000) {
           this.$message.success('信息保存成功')
           this.$store.commit('setUserInfo', data)
