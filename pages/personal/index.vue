@@ -116,7 +116,7 @@ export default {
         this.err[3]=''
         return
       }
-      if (!Number(value)||value > 100 || value < 40) {
+      if (!Number(value)||value > 200 || value < 100) {
         this.err[3] = '请输入真实的身高值'
       }else{
          this.err[3]=''
