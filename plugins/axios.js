@@ -3,8 +3,8 @@ import VueCookie from 'vue-cookie'
 import Vue from 'vue'
 export default ({ $axios, req, redirect }) => {
   $axios.defaults.timeout = 5000 // 响应时间
-  $axios.defaults.headers.post['Content-Type'] =
-    'application/x-www-form-urlencoded;charset=UTF-8' // 配置请求头
+  // $axios.defaults.headers.post['Content-Type'] =
+  //   'application/x-www-form-urlencoded;charset=UTF-8' // 配置请求头
   $axios.defaults.baseURL =
     process.env.NODE_ENV === 'production'
       ? process.env.serverApiUrl

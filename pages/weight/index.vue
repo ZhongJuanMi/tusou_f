@@ -3,9 +3,6 @@
     <div class="weight_c">
 
       <div class="weight_cb">
-        <!-- <el-button type="warning"
-                   round
-                   @click="infoDialogVisible=true">个人信息</el-button> -->
         <el-button type="danger"
                    round
                    @click="weightDialogVisible=true">记录体重</el-button>
@@ -16,32 +13,32 @@
                  v-if="weights.length" />
       </div>
 
-      <zjInfoDialog v-model="infoDialogVisible" />
       <zjWeightDialog v-model="weightDialogVisible"
                       @refresh='getWeight' />
     </div>
+    <transition  name="fade">
     <div v-if="tips"
-         class="weight_tips" @click="tips=false">
+         class="weight_tips" @click="tip=false">
       <div class="weight_tips_c">
         <div class="weight_tips_c_t" v-if="tipst">
           <p><i class="iconfont icon-tishi"></i>你还没有设置个人信息哦~</p>
           <p>点击上方设置，可比对标准体重与目标体重</p>
         </div>
-         <div class="weight_tips_c_b" v-if="!weights.length">
+         <div class="weight_tips_c_b" v-if="tipsb">
           <p><i class="iconfont icon-tishi"></i> 点击上方设置实际体重</p>
         </div>
         <div class="weight_tips_c_btn">
           <el-button round
-                     type="warning" @click="tips=false">好哒,我知道啦</el-button>
+                     type="warning" @click="tip=false">好哒,我知道啦</el-button>
         </div>
       </div>
 
     </div>
+    </transition>
   </div>
 </template>
 <script>
 import zjChart from '~/components/weight/chart'
-import zjInfoDialog from '~/components/weight/infoDialog'
 import zjWeightDialog from '~/components/weight/weightDialog'
 export default {
   middleware: 'auth',
@@ -55,13 +52,22 @@ export default {
     return {
       infoDialogVisible: false,
       weightDialogVisible: false,
-      tipst:this.$store.state.userInfo.idealWeight<=0,
-      tips:this.tipst||!this.weights||!this.weights.length
+      tip:true
+    }
+  },
+  computed:{
+    tipst(){
+      return this.$store.state.userInfo.idealWeight<=0
+    },
+    tipsb(){
+      return (!this.weights)||(!this.weights.length)
+    },
+    tips(){
+      return (this.tipst||this.tipsb)&&this.tip
     }
   },
   components: {
     zjChart,
-    zjInfoDialog,
     zjWeightDialog
   },
   methods: {
@@ -131,9 +137,9 @@ export default {
         font-size: 16px;
         color: #fff;
         z-index: $zindex_up;
-        animation: $updown;
+        animation: $fade;
         line-height: 30px;
-        animation-delay: 2s;
+        opacity: 0;
         i {
           color: $black;
           font-size: 20px;
@@ -154,8 +160,10 @@ export default {
         font-size: 16px;
          color: #fff;
         z-index: $zindex_up;
-        animation: $updown;
+        animation: $fade;
         line-height: 30px;
+                animation-delay: 1s;
+                opacity: 0;
         i {
           color: $black;
           font-size: 20px;
@@ -167,6 +175,9 @@ export default {
         bottom: 10%;
         left: 50%;
         margin-left: -50px;
+         animation: $fade;
+          animation-delay: 1.5s;
+          opacity: 0;
       }
     }
   }

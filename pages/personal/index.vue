@@ -18,14 +18,15 @@
         <label for="">{{item.label}}</label>
         <input type="text"
                v-model="item.value"
-               v-if="index!=1" @input="index?null:verifyname()">
+               v-if="index!=1"
+               @input="verify(index)">
         <el-radio-group v-model="settings[1].value"
                         v-else>
           <el-radio label="male">男</el-radio>
           <el-radio label="female">女</el-radio>
-          
+
         </el-radio-group>
-        <span v-if="err&&!index">{{err}}</span>
+        <span v-if="err[index]">{{err[index]}}</span>
       </li>
     </ul>
     <div class="btn">
@@ -63,19 +64,63 @@ export default {
       default_pic: default_pic,
       baseURL: store.state.baseURL,
       temp_pic: '',
-      err:null
+      err: ['','','','']
     }
   },
   methods: {
+    // 验证
+    verify (index) {
+      switch (index) {
+        case 0:
+          this.verifyname()
+          break;
+        case 2:
+          this.verifyweight()
+          break;
+        case 3:
+          this.verifyheight()
+          break;
+      }
+    },
     // 验证昵称是否可用
-    verifyname(){
+    verifyname () {
+      if (this.settings[0].value == this.$store.state.userInfo.name) {
+        this.err[0] = ''
+        return
+      }
       this.$axios.ifreged(this.settings[0].value).then(res => {
         if (res.data) {
-          this.err='此昵称已注册,重新选个名字叭~'
+          this.err[0] = '此昵称已注册,重新选个名字叭~'
         } else {
-          this.err=null
+          this.err[0] = ''
         }
       })
+    },
+    // 验证目标体重
+    verifyweight () {
+      let value = this.settings[2].value
+      if (!value) {
+        this.err[2]=''
+        return
+      }
+      if (!Number(value)||value > 100 || value < 40) {
+        this.err[2] = '请输入真实的体重值'
+      }else{
+         this.err[2]=''
+      }
+    },
+    // 验证身高
+    verifyheight () {
+      let value = this.settings[3].value
+      if (!value) {
+        this.err[3]=''
+        return
+      }
+      if (!Number(value)||value > 100 || value < 40) {
+        this.err[3] = '请输入真实的身高值'
+      }else{
+         this.err[3]=''
+      }
     },
     // 选取图片实时显示
     selecimg () {
@@ -90,8 +135,8 @@ export default {
     },
     // 保存设置
     savesetting () {
-      if(this.err){
-        this.$message.error('请重新设置昵称')
+      if (this.err.filter(item=>item).length>0) {
+        this.$message.error('填写错误,请按提示修改')
         return
       }
       let formData = new FormData()
@@ -106,7 +151,7 @@ export default {
         height: this.settings[3].value
       }
       formData.append('userInfo', JSON.stringify(data))
-      this.$axios.setUserInfo(formData).then(({ code,data }) => {
+      this.$axios.setUserInfo(formData).then(({ code, data }) => {
         if (code == 2000) {
           this.$message.success('信息保存成功')
           this.$store.commit('setUserInfo', data)
@@ -172,7 +217,7 @@ li {
     height: 30px;
     color: $black;
   }
-  >span{
+  > span {
     font-size: 14px;
     color: #f00;
     margin-left: 10px;

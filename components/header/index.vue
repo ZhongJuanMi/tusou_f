@@ -23,18 +23,21 @@
                    alt="">
               <i class="iconfont icon-sanjiao"></i>
             </div>
-            <dl class="person_more"
-                :class="{'on':person_more}">
-              <nuxt-link to="/personal"
-                         tag="dd">
-                <i class="iconfont icon-shezhi"></i>
-                <span>设置</span>
-              </nuxt-link>
-              <dd @click="outLog">
-                <i class="iconfont icon-tuichu"></i>
-                <span>退出</span>
-              </dd>
-            </dl>
+            <transition name="slideDown">
+              <dl class="person_more"
+                  v-if="person_more">
+                <!-- :class="{'on':person_more}" -->
+                <nuxt-link to="/personal"
+                           tag="dd">
+                  <i class="iconfont icon-shezhi"></i>
+                  <span>设置</span>
+                </nuxt-link>
+                <dd @click="outLog">
+                  <i class="iconfont icon-tuichu"></i>
+                  <span>退出</span>
+                </dd>
+              </dl>
+            </transition>
           </div>
           <div v-else
                class="log_no">
@@ -96,8 +99,8 @@ export default {
       return this.$store.state.userInfo.name
     },
     user_pic () {
-      let user_pic=this.$store.state.userInfo.user_pic
-      return user_pic? this.$store.state.baseURL+user_pic:default_pic
+      let user_pic = this.$store.state.userInfo.user_pic
+      return user_pic ? this.$store.state.baseURL + user_pic : default_pic
     }
   }
 }
@@ -200,12 +203,11 @@ header {
       top: 50px;
       left: 0;
       width: 80px;
-      height: 0;
       background: #f5efef;
-      transition: all 0.3s;
-      &.on {
-        height: 80px;
-      }
+      // transition: all 0.3s;
+      // &.on {
+      //   height: 80px;
+      // }
       dd {
         line-height: 40px;
         i {
