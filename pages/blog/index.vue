@@ -1,19 +1,25 @@
 <template>
   <div class="blog">
-    <div class="blog_l"
-         :class="{'fixed':fixed}">
-      <z-bnode :nodes="nodes"
-               :defaultProps="defaultProps"
-               v-model="condition"></z-bnode>
+    <div
+      :class="{'fixed':fixed}"
+      class="blog_l"
+    >
+      <z-bnode
+        :nodes="nodes"
+        :default-props="defaultProps"
+        v-model="condition"
+      />
     </div>
     <div class="blog_m">
-      <z-blist :list="list"
-               :pageSize="pageSize"
-               :page="page"
-               :count="count"
-               @refreshlist="refreshlist"
-               ref="ul"
-               :nodata="nodata" />
+      <z-blist
+        ref="ul"
+        :nodata="nodata"
+        :list="list"
+        :page-size="pageSize"
+        :page="page"
+        :count="count"
+        @refreshlist="refreshlist"
+      />
       <div class="moreOrFinish">
         <p v-if="finished&&list.length">数据加载完毕</p>
       </div>
@@ -22,7 +28,6 @@
 </template>
 
 <script>
-
 import ZBlist from '@/components/blog/index/list'
 import ZBnode from '@/components/blog/index/node'
 export default {
@@ -30,7 +35,7 @@ export default {
     ZBlist,
     ZBnode
   },
-  async asyncData ({ $axios, route }) {
+  async asyncData({ $axios, route }) {
     let condition = { ...route.query, page: 1 }
     let data = await $axios.getBlogList(condition)
     let res = await $axios.getBlogTagsCom()
@@ -51,7 +56,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       condition: {
         sort: 0,
@@ -65,7 +70,7 @@ export default {
     }
   },
   watch: {
-    condition (cur) {
+    condition(cur) {
       this.list = []
       this.getlists(1)
       this.$router.replace({
@@ -73,17 +78,17 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.fixedside()
     window.addEventListener('scroll', this.fixedside)
     window.addEventListener('scroll', this.loadmore)
   },
-  destroyed () {
+  destroyed() {
     window.removeEventListener('scroll', this.fixedside)
     window.removeEventListener('scroll', this.loadmore)
   },
   methods: {
-    getlists (page) {
+    getlists(page) {
       this.load = true
       this.$axios.getBlogList({ ...this.condition, page }).then(({ data }) => {
         this.nodata = false
@@ -104,11 +109,11 @@ export default {
         this.load = false
       })
     },
-    refreshlist(){
-      this.list=[]
+    refreshlist() {
+      this.list = []
       this.getlists(1)
     },
-    fixedside () {
+    fixedside() {
       let _h = document.documentElement.scrollTop
       if (_h > 81) {
         this.fixed = true
@@ -116,9 +121,12 @@ export default {
         this.fixed = false
       }
     },
-    loadmore () {
+    loadmore() {
       let _h1 = this.$refs.ul.$refs.list.clientHeight
-      let _h2 = document.documentElement.scrollTop + document.documentElement.clientHeight - 101
+      let _h2 =
+        document.documentElement.scrollTop +
+        document.documentElement.clientHeight -
+        101
       if (_h2 >= _h1 && !this.finished && !this.load) {
         this.getlists(this.page * 1 + 1)
       }
@@ -156,5 +164,3 @@ export default {
   }
 }
 </style>
-
-

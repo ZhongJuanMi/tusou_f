@@ -1,39 +1,54 @@
 <template>
   <div class="blog_m_c_b">
-    <ul class="blog_m_c_b_l"  ref="list">
-      <li v-for="(item,index) in list"
-          :key="index"
-          @click="godetail(item.id)">
+    <ul
+      ref="list"
+      class="blog_m_c_b_l"
+    >
+      <li
+        v-for="(item,index) in list"
+        :key="index"
+        @click="godetail(item.id)"
+      >
         <div class="img">
-          <img :src="$store.state.baseURL+item.pic"
-               alt="">
+          <img
+            :src="$store.state.baseURL+item.pic"
+            alt=""
+          >
         </div>
         <div class="text">
           <p class="blog_m_c_b_l_title">
-            <span>{{item.title}}</span>
+            <span>{{ item.title }}</span>
             <span v-if="$store.state.userInfo.is_tz">
-              <el-button type="primary"
-                         icon="el-icon-edit"
-                         size="mini"
-                         circle
-                         @click.stop="goedit(item.id)"></el-button>
-              <el-button type="danger"
-                         size="mini"
-                         icon="el-icon-delete"
-                         circle
-                         @click.stop="del(item.id)"></el-button>
+              <el-button
+                type="primary"
+                icon="el-icon-edit"
+                size="mini"
+                circle
+                @click.stop="goedit(item.id)"
+              />
+              <el-button
+                type="danger"
+                size="mini"
+                icon="el-icon-delete"
+                circle
+                @click.stop="del(item.id)"
+              />
             </span>
           </p>
 
-          <p class="blog_m_c_b_l_details">{{item.content}}</p>
-          <p class="blog_m_c_b_l_time">{{item.tags}} {{item.time}}</p>
+          <p class="blog_m_c_b_l_details">{{ item.content }}</p>
+          <p class="blog_m_c_b_l_time">{{ item.tags }} {{ item.time }}</p>
         </div>
 
       </li>
-      <li v-if="nodata"
-          class="not_found">
-        <img src="@/assets/images/not_found.png"
-             alt="">
+      <li
+        v-if="nodata"
+        class="not_found"
+      >
+        <img
+          src="@/assets/images/not_found.png"
+          alt=""
+        >
         <p> 好尴尬吖，木有此条件下的博客</p>
       </li>
     </ul>
@@ -43,45 +58,61 @@
 <script>
 export default {
   props: {
-    list: Array,
-    pageSize: [Number, String],
-    page: [Number, String],
-    count: [Number, String],
-    nodata:{
-      type:Boolean,
-      default:false
+    list: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    pageSize: {
+      type: [Number, String],
+      default: 10
+    },
+    page: {
+      type: [Number, String],
+      default: 1
+    },
+    count: {
+      type: [Number, String],
+      default: 0
+    },
+    nodata: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    godetail (id) {
+    godetail(id) {
       this.$router.push(`/blog/detail/${id}`)
     },
-    goedit (id) {
+    goedit(id) {
       this.$router.push(`/blog/edit/${id}`)
     },
-    del (id) {
+    del(id) {
       this.$confirm('删除此文章?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        this.$axios.delblog(id).then(res => {
-          if (res.code === 2000) {
-            this.$emit('refreshlist')
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(() => {
+          this.$axios.delblog(id).then(res => {
+            if (res.code === 2000) {
+              this.$emit('refreshlist')
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+            }
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
-    changepage (page) {
+    changepage(page) {
       this.$emit('getlists', page)
     }
   }
@@ -115,22 +146,22 @@ export default {
       margin-bottom: 20px;
       display: flex;
       align-content: center;
-      transition: all .4s;
-      &:hover{
+      transition: all 0.4s;
+      &:hover {
         cursor: $pointer;
         transform: translateY(-4px);
         box-shadow: 0px 4px 12px 2px rgba($gray, 0.1);
       }
-      
+
       &.not_found {
         display: block;
         box-shadow: none;
         background-color: transparent;
         text-align: center;
-        img{
-          margin:40px 0 40px -40px;
+        img {
+          margin: 40px 0 40px -40px;
         }
-        p{
+        p {
           font-size: 30px;
           color: $black;
         }
@@ -173,5 +204,3 @@ export default {
   }
 }
 </style>
-
-

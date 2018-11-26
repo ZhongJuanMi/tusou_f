@@ -1,69 +1,87 @@
 
 <template>
   <div>
-    <div class="blog_search"
-         :class={focus:searchFocus}>
-      <input type="text"
-             placeholder="兔搜,搜你想搜,嗖~"
-             @focus="searchFocus=true"
-             @blur="searchFocus=false"
-             v-model="keywords">
-      <el-button type="primary"
-                 size="mini"
-                 icon="el-icon-search"
-                 class="blog_search_b"
-                 @click="search"></el-button>
+    <div
+      :class="{focus:searchFocus}"
+      class="blog_search"
+    >
+      <input
+        v-model="keywords"
+        type="text"
+        placeholder="兔搜,搜你想搜,嗖~"
+        @focus="searchFocus=true"
+        @blur="searchFocus=false"
+      >
+      <el-button
+        type="primary"
+        size="mini"
+        icon="el-icon-search"
+        class="blog_search_b"
+        @click="search"
+      />
     </div>
     <div class="blog_classify">
       <p class="blog_classify_title">
-        <i class="iconfont icon-wenzhang"></i>
+        <i class="iconfont icon-wenzhang" />
         <span>博客类别</span>
       </p>
-      <el-tree :data="nodes"
-               :props="defaultProps"
-               :expand-on-click-node="false"
-               default-expand-all
-               highlight-current
-               @node-click="handleNodeClick">
-      </el-tree>
+      <el-tree
+        :data="nodes"
+        :props="defaultProps"
+        :expand-on-click-node="false"
+        default-expand-all
+        highlight-current
+        @node-click="handleNodeClick"
+      />
     </div>
     <div class="blog_tag">
       <p class="blog_tag_title">
-        <i class="iconfont icon-yanjing1"></i>
+        <i class="iconfont icon-yanjing1" />
         <span>筛选条件</span>
       </p>
       <div class="blog_tag_tag">
-        <el-tag :closable="index!='sort'"
-                @close="colsetag(index)"
-                :type="color(index)"
-                v-for="(item,index) in value"
-                :key="index"
-                v-if="index=='sort'||(index=='keywords'&&item)">
-          <span v-if="index=='sort'">{{item?'时间升序':'时间降序'}}</span>
-          <span v-if="index=='keywords'">关键字：{{item}}</span>
+        <el-tag
+          v-for="(item,index) in value"
+          v-if="index=='sort'||(index=='keywords'&&item)"
+          :closable="index!='sort'"
+          :type="color(index)"
+          :key="index"
+          @close="colsetag(index)"
+        >
+          <span v-if="index=='sort'">{{ item?'时间升序':'时间降序' }}</span>
+          <span v-if="index=='keywords'">关键字：{{ item }}</span>
         </el-tag>
-        <el-tag closable
-                @close="colsetag('tags')"
-                :type="color('tags')" v-if="tags">
-            分类：{{tags}}
+        <el-tag
+          v-if="tags"
+          :type="color('tags')"
+          closable
+          @close="colsetag('tags')"
+        >
+          分类：{{ tags }}
         </el-tag>
       </div>
 
     </div>
     <div class="blog_btn">
-      <el-button type="warning"
-                 size="mini"
-                 @click="changesort"
-                 :icon="`el-icon-sort-${value.sort?'up':'down'}`">时间{{value.sort?'升':'降'}}序</el-button>
-      <el-button type="danger"
-                 size="mini"
-                 icon="el-icon-refresh"
-                 @click="restorecondition">清空条件</el-button>
-      <el-button icon="el-icon-edit"
-                 size="mini"
-                 type="success"
-                 v-if="is_tz"
-                 @click="editblog">新增博客</el-button>
+      <el-button
+        :icon="`el-icon-sort-${value.sort?'up':'down'}`"
+        type="warning"
+        size="mini"
+        @click="changesort"
+      >时间{{ value.sort?'升':'降' }}序</el-button>
+      <el-button
+        type="danger"
+        size="mini"
+        icon="el-icon-refresh"
+        @click="restorecondition"
+      >清空条件</el-button>
+      <el-button
+        v-if="is_tz"
+        icon="el-icon-edit"
+        size="mini"
+        type="success"
+        @click="editblog"
+      >新增博客</el-button>
     </div>
 
   </div>
@@ -73,47 +91,61 @@
 
 <script>
 export default {
-
   props: {
-    nodes: Array,
-    defaultProps: Object,
-    value: Object
+    nodes: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    defaultProps: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    value: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
   },
-  data () {
+  data() {
     return {
       searchFocus: false,
       keywords: '',
-      tags:''
+      tags: ''
     }
   },
   computed: {
-    is_tz () {
+    is_tz() {
       return this.$store.state.userInfo.is_tz
     }
   },
   methods: {
-    handleNodeClick (data) {
+    handleNodeClick(data) {
       console.log(data)
       let temp = { ...this.value }
       temp.tags = data.value
       if (data) {
         this.$emit('input', temp)
-        this.tags=data.label
+        this.tags = data.label
       }
     },
-    colsetag (type) {
+    colsetag(type) {
       let temp = { ...this.value }
       if (type == 'sort') {
-        temp.sort = temp.sort?0:1
+        temp.sort = temp.sort ? 0 : 1
       } else {
         temp[type] = ''
-        if(type=='tags'){
-          this.tags=''
+        if (type == 'tags') {
+          this.tags = ''
         }
       }
       this.$emit('input', temp)
     },
-    color (type) {
+    color(type) {
       switch (type) {
         case 'sort':
           return 'warning'
@@ -123,31 +155,31 @@ export default {
           return 'danger'
       }
     },
-    changesort () {
+    changesort() {
       let temp = { ...this.value }
       temp.sort = temp.sort ? 0 : 1
       this.keywords = temp.keywords
       this.$emit('input', temp)
     },
-    restorecondition () {
+    restorecondition() {
       this.keywords = ''
-      this.tags=''
+      this.tags = ''
       this.$emit('input', {
         sort: 0,
         keywords: '',
-        tags:''
+        tags: ''
       })
     },
-    search () {
+    search() {
       let temp = { ...this.value }
       temp.keywords = this.keywords
       this.$emit('input', temp)
     },
-    editblog () {
+    editblog() {
       this.$router.push('/blog/edit')
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

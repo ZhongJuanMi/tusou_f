@@ -5,9 +5,9 @@ Vue.use(Vuex)
 export const state = () => {
   return {
     userInfo: {},
-    baseURL:'http://47.106.200.223:8000/'
-    // baseURL:'http://localhost:8000/'
-    
+    weather: {},
+    baseURL: 'http://47.106.200.223:8000/'
+    // baseURL: 'http://localhost:8000/'
   }
 }
 
@@ -17,11 +17,15 @@ export const mutations = {
   },
   clearUserInfo(state) {
     state.userInfo = {}
+  },
+  setWeather(state, payload) {
+    state.weather = payload
   }
 }
 
 export const actions = {
-  async nuxtServerInit({ state,commit }, { req,$axios }) {
+  async nuxtServerInit({ state, commit }, { req, $axios }) {
+    console.log(987)
     let _token = ''
     if (req.headers.cookie) {
       let arr,
@@ -38,6 +42,22 @@ export const actions = {
         }
       })
     }
-    
+    await $axios
+      .getweather()
+      .then(res => {
+        let city = res.results[0].location.name
+        let code = res.results[0].now.code
+        let temperature = res.results[0].now.temperature
+        let text = res.results[0].now.text
+        commit('setWeather', {
+          city,
+          code,
+          temperature,
+          text
+        })
+      })
+      .catch(() => {
+        return
+      })
   }
 }

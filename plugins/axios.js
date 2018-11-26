@@ -1,10 +1,8 @@
-// import axios from 'axios'
 import VueCookie from 'vue-cookie'
-import Vue from 'vue'
 export default ({ $axios, req, redirect }) => {
   $axios.defaults.timeout = 5000 // 响应时间
-  // $axios.defaults.headers.post['Content-Type'] =
-  //   'application/x-www-form-urlencoded;charset=UTF-8' // 配置请求头
+  $axios.defaults.headers.post['Content-Type'] =
+    'application/x-www-form-urlencoded;charset=UTF-8' // 配置请求头
   $axios.defaults.baseURL =
     process.env.NODE_ENV === 'production'
       ? process.env.serverApiUrl
@@ -82,7 +80,7 @@ export default ({ $axios, req, redirect }) => {
     log(name, password) {
       return post('api/users/logUser', { name, password })
     },
-    getUserInfo(){
+    getUserInfo() {
       return get('api/users/getUser')
     },
     /**
@@ -94,7 +92,7 @@ export default ({ $axios, req, redirect }) => {
      * @param {*} mouth 月
      */
     getBlogList(data) {
-      return get('api/blog/getBlogList', {...data,is_draft:0})
+      return get('api/blog/getBlogList', { ...data, is_draft: 0 })
     },
     /**
      * 获取博客分类
@@ -123,7 +121,7 @@ export default ({ $axios, req, redirect }) => {
      * @param {*} tags 分类
      */
     addBlog(params) {
-      return post('api/blog/addorsetBlog', {...params,is_draft:0})
+      return post('api/blog/addorsetBlog', { ...params, is_draft: 0 })
     },
     /**
      * 保存草稿
@@ -132,7 +130,7 @@ export default ({ $axios, req, redirect }) => {
      * @param {*} tags 分类
      */
     addDraft(params) {
-      return post('api/blog/addorsetBlog', {...params,is_draft:1})
+      return post('api/blog/addorsetBlog', { ...params, is_draft: 1 })
     },
     /**
      * 获取草稿列表
@@ -151,36 +149,46 @@ export default ({ $axios, req, redirect }) => {
      * 删除博客或草稿
      * @param {*} id 博客或草稿id
      */
-    delblog(id){
-      return post('api/blog/delBlog',{id})
+    delblog(id) {
+      return post('api/blog/delBlog', { id })
     },
     /**
      * 获取体重
      */
-    getweight(){
+    getweight() {
       return get('api/weights/getWeight')
     },
-    setweight(datetime,weight){
-      return post('api/weights/setWeight',{datetime,weight})
+    setweight(datetime, weight) {
+      return post('api/weights/setWeight', { datetime, weight })
     },
     /**
      * 设置用户信息
-     * @param {*} height 
-     * @param {*} idealWeight 
-     * @param {*} gender 
-     * @param {*} name 
-     * @param {*} user_pic 
+     * @param {*} height
+     * @param {*} idealWeight
+     * @param {*} gender
+     * @param {*} name
+     * @param {*} user_pic
      */
-    setUserInfo(data){
-      return post('api/users/setInfo',data)
+    setUserInfo(data) {
+      return post('api/users/setInfo', data)
     },
     /**
      *上传图片
      *
      * @returns
      */
-    uploadimg(data){
-      return post('api/file/imgupload',data)
+    uploadimg(data) {
+      return post('api/file/imgupload', data)
+    },
+    // 获取定位
+    getlocation() {
+      return get('bdl/location/ip?ak=XSAne7rZUx7tYzfwsE2nbfwo1f6TTz1G')
+    },
+    // 获取天气
+    getweather() {
+      return get(
+        `xz/v3/weather/now.json?key=p2jcmaawwv6neamm&location=ip&language=zh-Hans&unit=c`
+      )
     }
   }
   Object.assign($axios, api)

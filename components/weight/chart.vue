@@ -7,7 +7,7 @@
 <script>
 import echarts from 'echarts/lib/echarts'
 // 引入曲线图
-require('echarts/lib/chart/line');
+require('echarts/lib/chart/line')
 // 引入提示框和标题组件
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
@@ -18,21 +18,39 @@ require('echarts/lib/component/markLine')
 require('echarts/lib/component/visualMap')
 export default {
   props: {
-    weights: Array
+    weights: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
   },
-  data () {
+  data() {
     return {
       note: false
     }
   },
-  mounted () {
-    if (this.weights.length) {
-      this.draw()
+  computed: {
+    userInfo() {
+      return this.$store.state.userInfo
+    },
+    weightall() {
+      return this.weights
+        .map(item => {
+          return item.AM * 1 > item.PM * 1 ? item.AM * 1 : item.PM * 1
+        })
+        .sort((a, b) => a - b)
+    },
+    min() {
+      return this.weightall[0]
+    },
+    max() {
+      return this.weightall[this.weightall.length - 1]
     }
   },
   watch: {
     weights: {
-      handler (curVal, oldVal) {
+      handler(curVal, oldVal) {
         if (curVal.length) {
           this.draw()
         }
@@ -40,30 +58,19 @@ export default {
       deep: true
     },
     userInfo: {
-      handler () {
+      handler() {
         this.draw()
       },
       deep: true
     }
   },
-  computed: {
-    userInfo () {
-      return this.$store.state.userInfo
-    },
-    weightall () {
-      return this.weights.map(item => {
-        return item.AM*1 > item.PM*1 ? item.AM*1 : item.PM*1
-      }).sort((a, b) => a - b)
-    },
-    min () {
-      return this.weightall[0]
-    },
-    max () {
-      return this.weightall[this.weightall.length - 1]
+  mounted() {
+    if (this.weights.length) {
+      this.draw()
     }
   },
   methods: {
-    draw () {
+    draw() {
       // 目标体重
       // 标准体重
       let userInfo = this.$store.state.userInfo
@@ -90,8 +97,8 @@ export default {
           splitLine: {
             show: false
           },
-          min: (this.min)*1 < idealWeight*1 ? this.min : idealWeight,
-          max: (this.max)*1 > normalWeight*1 ? this.max : normalWeight
+          min: this.min * 1 < idealWeight * 1 ? this.min : idealWeight,
+          max: this.max * 1 > normalWeight * 1 ? this.max : normalWeight
         },
         toolbox: {
           left: 'center',
@@ -111,18 +118,24 @@ export default {
         visualMap: {
           top: 0,
           right: 0,
-          pieces: idealWeight ? [{
-            gt: 0,
-            lte: idealWeight,
-            color: '#409EFF'
-          }, {
-            gt: idealWeight,
-            lte: normalWeight,
-            color: '#67C23A'
-          }, {
-            gt: normalWeight,
-            color: '#f56c6c'
-          }] : []
+          pieces: !idealWeight
+            ? []
+            : [
+                {
+                  gt: 0,
+                  lte: idealWeight,
+                  color: '#409EFF'
+                },
+                {
+                  gt: idealWeight,
+                  lte: normalWeight,
+                  color: '#67C23A'
+                },
+                {
+                  gt: normalWeight,
+                  color: '#f56c6c'
+                }
+              ]
         },
         series: [
           {
@@ -130,7 +143,7 @@ export default {
             type: 'line',
             smooth: true,
             connectNulls: true,
-            data: this.weights.map(function (item) {
+            data: this.weights.map(item => {
               return item.AM
             }),
             markLine: {
@@ -164,7 +177,7 @@ export default {
             type: 'line',
             smooth: true,
             connectNulls: true,
-            data: this.weights.map(function (item) {
+            data: this.weights.map(item => {
               return item.PM
             }),
             markLine: {
@@ -193,8 +206,7 @@ export default {
               ]
             }
           }
-        ],
-
+        ]
       })
     }
   }
@@ -203,7 +215,7 @@ export default {
 
 <style lang="scss" scoped>
 #chartBox {
-    width: 800px;
-    height: 360px;
+  width: 800px;
+  height: 360px;
 }
 </style>
