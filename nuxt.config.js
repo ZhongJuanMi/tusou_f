@@ -91,7 +91,7 @@ module.exports = {
   },
   env: {
     serverApiUrl: 'http://47.106.200.223:3000/api/',
-    localApiUrl: 'http://127.0.0.1:3000/api/'
+    localApiUrl: 'http://localhost:3000/api/'
   },
   router: {
     base: '/',
