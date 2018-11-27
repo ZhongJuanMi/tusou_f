@@ -1,7 +1,34 @@
 import Vue from 'vue'
-import Element from 'element-ui/lib/element-ui.common'
-import locale from 'element-ui/lib/locale/lang/en'
+import {
+  Button,
+  Tag,
+  Tree,
+  Dialog,
+  Input,
+  Form,
+  Option,
+  Select,
+  FormItem,
+  DatePicker,
+  Cascader,
+  Radio,
+  RadioGroup,
+  Message
+} from 'element-ui'
 
 export default () => {
-  Vue.use(Element, { locale })
+  Vue.use(Button)
+    .use(Tag)
+    .use(Tree)
+    .use(Dialog)
+    .use(Input)
+    .use(Form)
+    .use(Option)
+    .use(Select)
+    .use(FormItem)
+    .use(DatePicker)
+    .use(Cascader)
+    .use(Radio)
+    .use(RadioGroup)
+  Vue.prototype.$message = Message
 }

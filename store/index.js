@@ -25,7 +25,6 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ state, commit }, { req, $axios }) {
-    console.log(987)
     let _token = ''
     if (req.headers.cookie) {
       let arr,

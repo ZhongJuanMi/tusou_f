@@ -31,7 +31,6 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    'element-ui/lib/theme-chalk/index.css',
     '~assets/css/index.scss',
     '~assets/css/my_element.scss',
     'mavon-editor/dist/css/index.css',
@@ -49,7 +48,6 @@ module.exports = {
     '@/plugins/vue-cookie',
     '@/plugins/highlight'
   ],
-
   /*
   ** Nuxt.js modules
   */
@@ -115,6 +113,14 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+    },
+    babel: {
+      plugins: [
+        [
+          'component',
+          { libraryName: 'element-ui', styleLibraryName: 'theme-chalk' }
+        ]
+      ]
     }
   }
 }
