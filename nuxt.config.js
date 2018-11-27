@@ -46,7 +46,8 @@ module.exports = {
     '@/plugins/mavon-editor',
     '@/plugins/axios',
     '@/plugins/vue-cookie',
-    '@/plugins/highlight'
+    '@/plugins/highlight',
+    '@/plugins/vue-lazyload'
   ],
   /*
   ** Nuxt.js modules

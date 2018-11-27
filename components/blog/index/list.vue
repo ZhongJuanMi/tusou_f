@@ -11,7 +11,7 @@
       >
         <div class="img">
           <img
-            :src="$store.state.baseURL+item.pic"
+            v-lazy="$store.state.baseURL+item.pic"
             alt=""
           >
         </div>
