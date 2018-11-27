@@ -5,7 +5,12 @@ Vue.use(Vuex)
 export const state = () => {
   return {
     userInfo: {},
-    weather: {},
+    weather: {
+      code: '99',
+      city: '……',
+      temperature: '……',
+      text: '……'
+    },
     baseURL: 'http://47.106.200.223:8000/'
     // baseURL: 'http://localhost:8000/'
   }
@@ -41,22 +46,5 @@ export const actions = {
         }
       })
     }
-    await $axios
-      .getweather()
-      .then(res => {
-        let city = res.results[0].location.name
-        let code = res.results[0].now.code
-        let temperature = res.results[0].now.temperature
-        let text = res.results[0].now.text
-        commit('setWeather', {
-          city,
-          code,
-          temperature,
-          text
-        })
-      })
-      .catch(() => {
-        return
-      })
   }
 }

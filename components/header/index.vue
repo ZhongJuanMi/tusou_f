@@ -19,7 +19,9 @@
             tag="span"
           >{{ item.key }}</nuxt-link>
         </li>
-        <li class="weather">
+        <li
+          class="weather"
+        >
           <img
             :src="weatherpic"
             alt=""
@@ -27,7 +29,7 @@
           <div>
             <p>
               <span>{{ weather.text }}</span>
-              <span>{{ weather.temperature }}℃</span>
+              <span>{{ weather.temperature }}</span>
             </p>
             <p>{{ weather.city }}</p>
           </div>
@@ -134,7 +136,30 @@ export default {
       return weatherpics[this.weather.code]
     }
   },
+  mounted() {
+    this.getweather()
+  },
   methods: {
+    // 获取天气
+    getweather() {
+      this.$axios
+        .getweather()
+        .then(res => {
+          let city = res.results[0].location.name
+          let code = res.results[0].now.code
+          let temperature = `${res.results[0].now.temperature}℃`
+          let text = res.results[0].now.text
+          this.$store.commit('setWeather', {
+            city,
+            code,
+            temperature,
+            text
+          })
+        })
+        .catch(() => {
+          return
+        })
+    },
     // 退出登录
     outLog() {
       this.$cookie.delete('user_token')

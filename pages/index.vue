@@ -1,8 +1,16 @@
 <template>
-  <div/>
+  <div>
+    <three />
+  </div>
 </template>
 
 <script>
+import three from '~/components/three'
+export default {
+  components: {
+    three
+  }
+}
 </script>
 
 

@@ -13,7 +13,8 @@ import {
   Cascader,
   Radio,
   RadioGroup,
-  Message
+  Message,
+  Notification
 } from 'element-ui'
 
 export default () => {
@@ -31,4 +32,5 @@ export default () => {
     .use(Radio)
     .use(RadioGroup)
   Vue.prototype.$message = Message
+  Vue.prototype.$notify = Notification
 }
