@@ -152,7 +152,7 @@ export default {
         position: absolute;
         right: 64px;
         top: 30px;
-        background: url(/assets/images/dialog.png) center no-repeat;
+        background: url(../../assets/images/dialog.png) center no-repeat;
         font-size: 16px;
         color: #fff;
         z-index: $zindex_up;
@@ -174,7 +174,7 @@ export default {
         left: 50%;
         top: 50%;
         margin-top: -64px;
-        background: url(/assets/images/dialog_l.png) center no-repeat;
+        background: url(../../assets/images/dialog_l.png) center no-repeat;
         background-size: 260px;
         font-size: 16px;
         color: #fff;

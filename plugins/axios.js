@@ -180,10 +180,6 @@ export default ({ $axios, req, redirect }) => {
     uploadimg(data) {
       return post('api/file/imgupload', data)
     },
-    // 获取定位
-    getlocation() {
-      return get('bdl/location/ip?ak=XSAne7rZUx7tYzfwsE2nbfwo1f6TTz1G')
-    },
     // 获取天气
     getweather(location) {
       return get(
