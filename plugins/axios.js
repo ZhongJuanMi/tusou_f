@@ -185,9 +185,9 @@ export default ({ $axios, req, redirect }) => {
       return get('bdl/location/ip?ak=XSAne7rZUx7tYzfwsE2nbfwo1f6TTz1G')
     },
     // 获取天气
-    getweather() {
+    getweather(location) {
       return get(
-        `xz/v3/weather/now.json?key=p2jcmaawwv6neamm&location=ip&language=zh-Hans&unit=c`
+        `xz/v3/weather/now.json?key=p2jcmaawwv6neamm&location=${location}&language=zh-Hans&unit=c`
       )
     }
   }
