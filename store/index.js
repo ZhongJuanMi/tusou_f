@@ -53,7 +53,6 @@ export const actions = {
       req.connection.remoteAddress || // 判断 connection 的远程 IP
       req.socket.remoteAddress || // 判断后端的 socket 的 IP
       req.connection.socket.remoteAddress
-    console.log(location)
     await this.$axios
       .getweather(location)
       .then(res => {
