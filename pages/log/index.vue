@@ -1,5 +1,6 @@
 <template>
   <div class="log">
+    <bubble />
     <div class="log_box">
       <el-form
         ref="logForm"
@@ -49,7 +50,11 @@
 </template>
     
 <script>
+import bubble from '~/components/three/bubble'
 export default {
+  components: {
+    bubble
+  },
   data() {
     return {
       logForm: {

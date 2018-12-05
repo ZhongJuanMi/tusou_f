@@ -1,14 +1,14 @@
 <template>
   <div>
-    <butterfly />
+    <hotAirBalloon />
   </div>
 </template>
 
 <script>
-import butterfly from '~/components/three/butterfly'
+import hotAirBalloon from '~/components/three/hotAirBalloon'
 export default {
   components: {
-    butterfly
+    hotAirBalloon
   }
 }
 </script>

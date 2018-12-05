@@ -1,5 +1,6 @@
 <template>
   <div class="reg">
+    <bubble />
     <div class="reg_box">
       <el-form
         ref="regForm"
@@ -59,7 +60,11 @@
 </template>
     
 <script>
+import bubble from '~/components/three/bubble'
 export default {
+  components: {
+    bubble
+  },
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === '') {

@@ -129,11 +129,15 @@ export class Tz {
     let geomEye = new THREE.SphereGeometry(1.5)
     let matEye = new THREE.MeshLambertMaterial({ color: Colors.white })
     let eyeR = new THREE.Mesh(geomEye, matEye)
+    eyeR.castShadow = true
+    eyeR.receiveShadow = true
     eyeR.position.x = 2
     // 瞳孔
     let geomEyeC = new THREE.SphereGeometry(0.9)
     let matEyeC = new THREE.MeshPhongMaterial({ color: Colors.brownDark })
     let eyeCR = new THREE.Mesh(geomEyeC, matEyeC)
+    eyeCR.castShadow = true
+    eyeCR.receiveShadow = true
     eyeCR.position.set(2, -0.1, 1)
     let eyeL = eyeR.clone()
     let eyeCL = eyeCR.clone()

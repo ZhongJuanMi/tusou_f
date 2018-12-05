@@ -1,13 +1,14 @@
 <template>
   <div
-    ref="butterfly"
-    class="butterfly"
+    ref="bubble"
+    class="bubble"
   />
 </template>
 
 <script>
 import * as THREE from 'three'
-import { HotAirBalloon, Basket, Tz, Sea } from './class'
+import { Bubble, Sky } from './class'
+import { getRandom } from '../../../utils/tools'
 export default {
   data() {
     return {
@@ -17,13 +18,10 @@ export default {
       camera: null,
       // 渲染器
       renderer: null,
-      hotAirBalloon: null,
-      basket: null,
-      tz: null,
-      sea: null,
-      width: null,
+      // 天空
+      sky: null,
       height: null,
-      // 鼠标点
+      width: null,
       mousePos: {
         x: null,
         y: null
@@ -32,11 +30,8 @@ export default {
   },
   mounted() {
     this.init()
-    this.createEarth()
-    this.createBall()
-    this.createLights()
-    //添加监听器
-    document.addEventListener('mousemove', this.handleMouseMove, false)
+    this.createSky()
+    // 循环动画
     this.loop()
   },
   methods: {
@@ -45,6 +40,10 @@ export default {
       this.height = window.innerHeight
       // 创建场景，相机和渲染器
       this.createScene()
+      // 创建光源
+      this.createLights()
+      //添加监听器
+      document.addEventListener('mousemove', this.handleMouseMove, false)
     },
     createScene() {
       // 创建场景
@@ -86,7 +85,7 @@ export default {
       // 打开渲染器的阴影地图
       this.renderer.shadowMap.enabled = true
       // 在 HTML 创建的容器中添加渲染器的 DOM 元素
-      let container = this.$refs.butterfly
+      let container = this.$refs.bubble
       container.appendChild(this.renderer.domElement)
       // 监听屏幕，缩放屏幕更新相机和渲染器的尺寸
       window.addEventListener('resize', this.handleWindowResize, false)
@@ -103,16 +102,16 @@ export default {
     createLights() {
       // 半球光就是渐变的光；
       // 第一个参数是天空的颜色，第二个参数是地上的颜色，第三个参数是光源的强度
-      let hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.9)
+      let hemisphereLight = new THREE.HemisphereLight(0xffffff, 0xff0000, 0.5)
 
       // 方向光是从一个特定的方向的照射
       // 类似太阳，即所有光源是平行的
       // 第一个参数是关系颜色，第二个参数是光源强度
-      let shadowLight = new THREE.DirectionalLight(0xffffff, 0.9)
+      let shadowLight = new THREE.DirectionalLight(0xffff00, 0.9)
 
       // 设置光源的方向。
       // 位置不同，方向光作用于物体的面也不同，看到的颜色也不同
-      shadowLight.position.set(150, 350, 350)
+      shadowLight.position.set(350, 350, 350)
 
       // 开启光源投影
       shadowLight.castShadow = true
@@ -135,29 +134,16 @@ export default {
       this.scene.add(shadowLight)
       this.scene.add(ambientLight)
     },
-    // 添加热气球
-    createBall() {
-      this.hotAirBalloon = new HotAirBalloon()
-      this.hotAirBalloon.mesh.position.y = 100
-      this.basket = new Basket()
-      this.basket.mesh.position.set(0, -52, 0)
-      this.basket.mesh.rotation.y = 0.02
-      this.tz = new Tz()
-      this.tz.mesh.position.set(0, -7, 4)
-      this.basket.mesh.add(this.tz.mesh)
-      this.hotAirBalloon.mesh.add(this.basket.mesh)
-      // 添加热气球的网格至场景
-      this.scene.add(this.hotAirBalloon.mesh)
-      // 开始眼睛动画
-      this.tz.updateEyes()
-      this.tz.updateEars()
+    createSky() {
+      this.sky = new Sky()
+      this.scene.add(this.sky.mesh)
+      this.sky.mesh.position.y = 100
     },
-    // 添加大海
-    createEarth() {
-      this.sea = new Sea()
-      // 在场景底部，稍微推挤一下
-      this.sea.mesh.position.y = -400
-      this.scene.add(this.sea.mesh)
+    loop() {
+      this.updateCamara()
+      this.sky.moveBubble()
+      this.renderer.render(this.scene, this.camera)
+      requestAnimationFrame(this.loop)
     },
     handleMouseMove(event) {
       // 这里我把接收到的鼠标位置的值转换成归一化值，在-1与1之间变化
@@ -171,30 +157,15 @@ export default {
       let ty = 1 - (event.clientY / this.height) * 2
       this.mousePos = { x: tx, y: ty }
     },
-    loop() {
-      // 更新每帧的热气球
-      this.updateBall()
-      this.sea.moveWaves()
-      this.renderer.render(this.scene, this.camera)
-      requestAnimationFrame(this.loop)
-    },
-    updateBall() {
-      // 让我们在x轴上-100至100之间和y轴25至175之间移动热气球
+    updateCamara() {
+      // 让我们在x轴上-40至40之间和y轴80至160之间移动热气球
       // 根据鼠标的位置在-1与1之间的范围，我们使用的 normalize 函数实现（如下）
-      let targetX = this.normalize(this.mousePos.x, -0.75, 0.75, -40, 40)
-      let targetY = this.normalize(this.mousePos.y, -0.75, 0.75, 80, 160)
+      let targetX = this.normalize(this.mousePos.x, -0.75, 0.75, -10, 10)
+      let targetY = this.normalize(this.mousePos.y, -0.75, 0.75, 90, 110)
       // 在每帧通过添加剩余距离的一小部分的值移动热气球
-      this.hotAirBalloon.mesh.position.y +=
-        (targetY - this.hotAirBalloon.mesh.position.y) * 0.1
-      this.hotAirBalloon.mesh.position.x +=
-        (targetX - this.hotAirBalloon.mesh.position.x) * 0.1
-      // this.hotAirBalloon.mesh.position.z += (targetX - this.hotAirBalloon.mesh.position.x) * 0.1
-      // 剩余的距离按比例转动热气球
-      // this.hotAirBalloon.mesh.rotation.z = (targetY - this.hotAirBalloon.mesh.position.y) * 0.01
-      this.hotAirBalloon.mesh.rotation.y =
-        (targetX - this.hotAirBalloon.mesh.position.x) * 0.04
-      this.hotAirBalloon.mesh.rotation.x =
-        (this.hotAirBalloon.mesh.position.y - targetY) * 0.04
+      this.camera.position.y += (targetY - this.camera.position.y) * 0.1
+      this.camera.position.x += (targetX - this.camera.position.x) * 0.1
+      this.camera.position.z += (targetY - this.camera.position.y) * 0.05
     },
     normalize(v, vmin, vmax, tmin, tmax) {
       let nv = Math.max(Math.min(v, vmax), vmin)
@@ -209,7 +180,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.butterfly {
+.bubble {
   width: 100vw;
   height: 100vh;
   position: fixed;
