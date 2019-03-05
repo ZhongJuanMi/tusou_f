@@ -2,57 +2,19 @@
   <div class="reg">
     <bubble />
     <div class="reg_box">
-      <el-form
-        ref="regForm"
-        :model="regForm"
-        :rules="regRules"
-        status-icon
-        label-width="80px"
-        size="small"
-        class="reg_form"
-      >
-        <el-form-item
-          label="昵称"
-          prop="nickName"
-        >
-          <el-input
-            v-model="regForm.nickName"
-            type="text"
-            auto-complete="off"
-          />
+      <el-form ref="regForm" :model="regForm" :rules="regRules" status-icon label-width="80px" size="small" class="reg_form">
+        <el-form-item label="昵称" prop="nickName">
+          <el-input v-model="regForm.nickName" type="text" auto-complete="off" />
         </el-form-item>
-        <el-form-item
-          label="密码"
-          prop="pass"
-        >
-          <el-input
-            v-model="regForm.pass"
-            type="password"
-            auto-complete="off"
-          />
+        <el-form-item label="密码" prop="pass">
+          <el-input v-model="regForm.pass" type="password" auto-complete="off" />
         </el-form-item>
-        <el-form-item
-          label="确认密码"
-          prop="checkPass"
-        >
-          <el-input
-            v-model="regForm.checkPass"
-            type="password"
-            auto-complete="off"
-          />
+        <el-form-item label="确认密码" prop="checkPass">
+          <el-input v-model="regForm.checkPass" type="password" auto-complete="off" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            size="mini"
-            round
-            @click="submitForm('regForm')"
-          >注册</el-button>
-          <el-button
-            size="mini"
-            round
-            @click="resetForm('regForm')"
-          >重置</el-button>
+          <el-button type="primary" size="mini" round @click="submitForm('regForm')">注册</el-button>
+          <el-button size="mini" round @click="resetForm('regForm')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -60,12 +22,12 @@
 </template>
     
 <script>
-import bubble from '~/components/three/bubble'
+import bubble from '~/components/canvas/bubble'
 export default {
   components: {
     bubble
   },
-  data() {
+  data () {
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
@@ -124,7 +86,7 @@ export default {
     }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios
@@ -143,7 +105,7 @@ export default {
         }
       })
     },
-    resetForm(formName) {
+    resetForm (formName) {
       this.$refs[formName].resetFields()
     }
   }

@@ -2,47 +2,16 @@
   <div class="log">
     <bubble />
     <div class="log_box">
-      <el-form
-        ref="logForm"
-        :rules="logRules"
-        :model="logForm"
-        status-icon
-        label-width="70px"
-        size="small"
-        class="log_form"
-      >
-        <el-form-item
-          label="昵称"
-          prop="nickName"
-        >
-          <el-input
-            v-model="logForm.nickName"
-            type="text"
-            auto-complete="off"
-          />
+      <el-form ref="logForm" :rules="logRules" :model="logForm" status-icon label-width="70px" size="small" class="log_form">
+        <el-form-item label="昵称" prop="nickName">
+          <el-input v-model="logForm.nickName" type="text" auto-complete="off" />
         </el-form-item>
-        <el-form-item
-          label="密码"
-          prop="pass"
-        >
-          <el-input
-            v-model="logForm.pass"
-            type="password"
-            auto-complete="off"
-          />
+        <el-form-item label="密码" prop="pass">
+          <el-input v-model="logForm.pass" type="password" auto-complete="off" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            size="mini"
-            round
-            @click="submitForm('logForm')"
-          >登录</el-button>
-          <el-button
-            size="mini"
-            round
-            @click="resetForm('logForm')"
-          >重置</el-button>
+          <el-button type="primary" size="mini" round @click="submitForm('logForm')">登录</el-button>
+          <el-button size="mini" round @click="resetForm('logForm')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -50,12 +19,12 @@
 </template>
     
 <script>
-import bubble from '~/components/three/bubble'
+import bubble from '~/components/canvas/bubble'
 export default {
   components: {
     bubble
   },
-  data() {
+  data () {
     return {
       logForm: {
         pass: '',
@@ -75,7 +44,7 @@ export default {
     }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
           this.$axios
@@ -95,7 +64,7 @@ export default {
         }
       })
     },
-    resetForm(formName) {
+    resetForm (formName) {
       this.$refs[formName].resetFields()
     }
   }
